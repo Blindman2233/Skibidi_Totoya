@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ad2eb35b400c84a91b47921fc136a9, type: 3}
+  m_Name: WaterSettings
+  m_EditorClassIdentifier: Assembly-CSharp::FluidData
+  prefab: {fileID: 5998002333681827536, guid: 7c8f01bf880c0a041a1818068b5c55ca, type: 3}
+  maxParticles: 1500
+  fireRate: 0.02
+  shootForce: 15
+  spread: 0.5
