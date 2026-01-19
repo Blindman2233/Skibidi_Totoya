@@ -6,31 +6,58 @@ public class Watershooter : MonoBehaviour
 
     [Header("Speed Settings")]
     [Tooltip("Time in seconds between shots. 0.1 = fast, 0.5 = slow")]
-    public float shootDelay = 0.1f; // CHANGE THIS NUMBER to control speed!
+    public float shootDelay = 0.1f;
+
+    [Header("New Settings")]
+    [Tooltip("How many seconds to wait before the gun starts shooting")]
+    public float startDelay = 2.0f;
+
+    [Tooltip("Total amount of water drops to shoot")]
+    public int amountToDrop = 50;
 
     private float nextShootTime = 0f;
+    private int currentDrops = 0;
+    private bool isFinished = false; // To make sure we only print "Complete" once
+
+    void Start()
+    {
+        nextShootTime = Time.time + startDelay;
+    }
 
     void Update()
     {
-        // Check if enough time has passed since the last shot
+        // Safety Check: If we are already done, do nothing
+        if (isFinished) return;
+
         if (Time.time > nextShootTime)
         {
-            Shoot();
-            // Reset the timer for the next shot
-            nextShootTime = Time.time + shootDelay;
+            if (currentDrops < amountToDrop)
+            {
+                Shoot();
+                nextShootTime = Time.time + shootDelay;
+            }
         }
     }
 
     void Shoot()
     {
-        // 1. Spawn the object
+        // 1. Spawn & Shoot
         GameObject drop = Instantiate(blueCircle, transform.position, Quaternion.identity);
+        currentDrops++; // Count it!
 
-        // 2. Shoot it to the Right
         Rigidbody2D rb = drop.GetComponent<Rigidbody2D>();
-        rb.AddForce(transform.right * 1f, ForceMode2D.Impulse);
+        if (rb != null)
+        {
+            rb.AddForce(transform.right * 1f, ForceMode2D.Impulse);
+        }
 
-        // 3. Destroy it after 20 seconds
         Destroy(drop, 30f);
+
+        // 2. CHECK: Did we just shoot the last one?
+        if (currentDrops >= amountToDrop)
+        {
+            Debug.Log("Complete"); // <--- This prints to your Console!
+            isFinished = true;     // Stop the gun properly
+        }
     }
 }

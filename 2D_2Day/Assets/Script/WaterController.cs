@@ -3,71 +3,60 @@ using UnityEngine;
 public class WaterController : MonoBehaviour
 {
     [Header("Settings")]
-    public float springConstant = 0.02f;  // How stiff the spring is
-    public float damping = 0.04f;         // How quickly waves stop moving
-    public float spread = 0.05f;          // How much waves spread to neighbors
-    public int springCount = 100;         // Number of points on top surface
-    public float width = 10f;             // Total width of the water
-    public float depth = 5f;              // Depth of the water
+    public float springConstant = 0.02f;
+    public float damping = 0.04f;
+    public float spread = 0.05f;
+    public int springCount = 100;
+    public float width = 2f;      // Reduced width to fit a glass
+    public float depth = 2f;      // Reduced depth to fit a glass
 
     [Header("Rendering")]
-    public Material waterMaterial;
+    public Material waterMaterial; // Don't forget to assign this!
 
-    // Internal physics arrays
-    float[] xPositions;
-    float[] yPositions;
+    // Arrays
+    float[] yLocalPositions; // Changed to calculate Local Height only
     float[] velocities;
     float[] accelerations;
 
-    // Mesh components
-    LineRenderer body; // For the surface line (optional)
+    // Mesh
     GameObject meshObject;
     Mesh mesh;
     MeshFilter meshFilter;
     MeshRenderer meshRenderer;
-
-    // Impact tracking
-    float baseHeight;
-    float left;
-    float bottom;
 
     void Start()
     {
         InitializePhysics();
         GenerateMesh();
 
-        // Add a BoxCollider2D trigger so we detect objects entering
+        // Create Trigger Collider automatically
         BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();
         col.size = new Vector2(width, depth);
-        col.offset = new Vector2(width / 2, -depth / 2);
+        // Offset assumes top-left pivot, moving to center of volume
+        col.offset = new Vector2(width / 2f, -depth / 2f);
         col.isTrigger = true;
     }
 
     void InitializePhysics()
     {
-        xPositions = new float[springCount];
-        yPositions = new float[springCount];
+        yLocalPositions = new float[springCount];
         velocities = new float[springCount];
         accelerations = new float[springCount];
 
-        baseHeight = transform.position.y;
-        left = transform.position.x;
-        bottom = baseHeight - depth;
-
-        float spacing = width / (springCount - 1);
-
+        // We don't need xPositions array anymore, we calculate X on the fly
+        // We set initial Y to 0 (Local center)
         for (int i = 0; i < springCount; i++)
         {
-            yPositions[i] = baseHeight;
-            xPositions[i] = left + (i * spacing);
+            yLocalPositions[i] = 0f;
         }
     }
 
     void GenerateMesh()
     {
-        // Setup Mesh Rendering
         meshObject = new GameObject("WaterMesh");
-        meshObject.transform.parent = transform;
+        meshObject.transform.SetParent(transform, false); // Attach to this object
+        meshObject.transform.localPosition = Vector3.zero; // Reset position
+
         meshRenderer = meshObject.AddComponent<MeshRenderer>();
         meshFilter = meshObject.AddComponent<MeshFilter>();
         meshRenderer.material = waterMaterial;
@@ -84,40 +73,40 @@ public class WaterController : MonoBehaviour
 
     void UpdatePhysics()
     {
-        // 1. Spring Physics (Hooke's Law)
+        // 1. Spring Physics (Local Space)
         for (int i = 0; i < springCount; i++)
         {
-            float force = springConstant * (yPositions[i] - baseHeight) + velocities[i] * damping;
+            // Target height is always 0 (Local)
+            float force = springConstant * (yLocalPositions[i] - 0f) + velocities[i] * damping;
             accelerations[i] = -force;
-            yPositions[i] += velocities[i];
+            yLocalPositions[i] += velocities[i];
             velocities[i] += accelerations[i];
         }
 
-        // 2. Wave Spreading (Neighbor interaction)
+        // 2. Wave Spreading
         float[] leftDeltas = new float[springCount];
         float[] rightDeltas = new float[springCount];
 
-        // Run this spread pass a few times (8 is standard) for smoothness
         for (int j = 0; j < 8; j++)
         {
             for (int i = 0; i < springCount; i++)
             {
                 if (i > 0)
                 {
-                    leftDeltas[i] = spread * (yPositions[i] - yPositions[i - 1]);
+                    leftDeltas[i] = spread * (yLocalPositions[i] - yLocalPositions[i - 1]);
                     velocities[i - 1] += leftDeltas[i];
                 }
                 if (i < springCount - 1)
                 {
-                    rightDeltas[i] = spread * (yPositions[i] - yPositions[i + 1]);
+                    rightDeltas[i] = spread * (yLocalPositions[i] - yLocalPositions[i + 1]);
                     velocities[i + 1] += rightDeltas[i];
                 }
             }
 
             for (int i = 0; i < springCount; i++)
             {
-                if (i > 0) yPositions[i - 1] += leftDeltas[i];
-                if (i < springCount - 1) yPositions[i + 1] += rightDeltas[i];
+                if (i > 0) yLocalPositions[i - 1] += leftDeltas[i];
+                if (i < springCount - 1) yLocalPositions[i + 1] += rightDeltas[i];
             }
         }
     }
@@ -127,16 +116,19 @@ public class WaterController : MonoBehaviour
         Vector3[] vertices = new Vector3[springCount * 2];
         int[] triangles = new int[(springCount - 1) * 6];
 
-        // Build vertices: Top row (springs) and Bottom row (fixed)
+        float spacing = width / (springCount - 1);
+
         for (int i = 0; i < springCount; i++)
         {
-            // Top Vertex (Dynamic)
-            vertices[i] = transform.InverseTransformPoint(new Vector3(xPositions[i], yPositions[i], 0));
-            // Bottom Vertex (Fixed)
-            vertices[i + springCount] = transform.InverseTransformPoint(new Vector3(xPositions[i], bottom, 0));
+            float localX = i * spacing;
+
+            // Top Vertex (The Wave)
+            vertices[i] = new Vector3(localX, yLocalPositions[i], 0);
+
+            // Bottom Vertex (The Deep End)
+            vertices[i + springCount] = new Vector3(localX, -depth, 0);
         }
 
-        // Build Triangles
         int t = 0;
         for (int i = 0; i < springCount - 1; i++)
         {
@@ -157,31 +149,39 @@ public class WaterController : MonoBehaviour
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+        mesh.RecalculateBounds(); // Important for visibility when moving!
     }
 
-    // Call this from other scripts to make a splash!
-    public void Splash(float xpos, float velocity)
+    // Splash uses World Position input, converts to Local Index
+    public void Splash(float worldXPos, float velocity)
     {
-        // Find the spring closest to the impact position
-        if (xpos >= xPositions[0] && xpos <= xPositions[springCount - 1])
+        // Convert World X to Local X
+        float localX = transform.InverseTransformPoint(new Vector3(worldXPos, 0, 0)).x;
+
+        if (localX >= 0 && localX <= width)
         {
-            // Map xpos to array index
-            float percentage = (xpos - xPositions[0]) / width;
+            float percentage = localX / width;
             int index = Mathf.RoundToInt(percentage * (springCount - 1));
 
-            // Apply force
+            // Clamp index to be safe
+            index = Mathf.Clamp(index, 0, springCount - 1);
+
             velocities[index] = velocity;
         }
     }
 
-    // Automatic splash detection
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            // Use the falling object's mass and velocity to determine splash size
+            // Unity 6 use linearVelocity, Older Unity use velocity
+#if UNITY_6000_0_OR_NEWER
             float speed = rb.linearVelocity.y * rb.mass / 40f;
+#else
+            float speed = rb.velocity.y * rb.mass / 40f;
+#endif
+
             Splash(collision.transform.position.x, speed);
         }
     }
