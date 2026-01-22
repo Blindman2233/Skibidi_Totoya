@@ -25,7 +25,7 @@ public class JellyBall : MonoBehaviour
     {
         // 1. Spawn slightly off-center so they don't overlap instantly
         Vector3 randomPos = transform.position + (Vector3)Random.insideUnitCircle * 0.1f;
-        GameObject drop = Instantiate(blueCircle, randomPos, Quaternion.identity);
+        GameObject drop = Instantiate(blueCircle, randomPos, Quaternion.identity); 
 
         // 2. Add "Spread" (Random Up/Down direction)
         // This makes it spray like a hose instead of a laser

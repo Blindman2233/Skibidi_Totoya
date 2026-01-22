@@ -1,36 +1,53 @@
 ﻿using UnityEngine;
-using TMPro; // Include this just in case you use TextMeshPro later
+using TMPro;
 
 public class FailZone : MonoBehaviour
 {
+    [Header("Settings")]
+    public int maxAllowedDrops = 5;
+
     [Header("Optional UI")]
-    public GameObject failTextObject; // Drag your "Fail" text here (if you have one)
+    public GameObject failTextObject;
 
-    private bool hasFailed = false;
+    private int dropCount = 0;
+    private bool hasFailed = false; 
 
-    // This detects when something physically bumps into the floor
+    void Start()
+    {
+        // CRITICAL: Always unpause the game when the level starts!
+        // If we don't do this, the game will stay frozen after you restart.
+        Time.timeScale = 1f;
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Only trigger if we haven't failed yet
         if (hasFailed) return;
 
-        // Check if the object is Water
-        // (We need to make sure your Water Prefab has the tag "Water")
         if (collision.gameObject.CompareTag("Water"))
         {
-            FailMission();
+            dropCount++;
+            Debug.Log("Water touched floor! Count: " + dropCount + " / " + maxAllowedDrops);
+
+            if (dropCount > maxAllowedDrops)
+            {
+                FailMission();
+            }
         }
     }
 
     void FailMission()
     {
         hasFailed = true;
-        Debug.Log("❌ MISSION FAILED: Water touched the floor!");
+        Debug.Log("❌ MISSION FAILED: Too much water spilled!");
 
-        // If you attached a UI text, show it now
+        // Show the UI
         if (failTextObject != null)
         {
             failTextObject.SetActive(true);
         }
+
+        // --- PAUSE THE GAME ---
+        // This stops physics, inputs, and movement immediately
+        Time.timeScale = 0f;
     }
 }
