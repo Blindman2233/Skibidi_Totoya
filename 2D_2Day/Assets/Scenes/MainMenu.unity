@@ -1529,7 +1529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MouseFollower
   player: {fileID: 1440804034}
   mainCam: {fileID: 105293255}
-  rangeLimit: 0.08
+  rangeLimit: 1
   smoothTime: 0.173
 --- !u!1 &1397847940
 GameObject:
