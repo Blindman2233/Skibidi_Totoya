@@ -1,51 +1,85 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-using vector2 = UnityEngine.Vector2;
 
 public class Shower : MonoBehaviour
 {
-    // Get the Simulation object
+    [Header("References")]
     public GameObject Simulation;
-    // Get the Base_Particle object from Scene
     public GameObject Base_Particle;
+
+    [Header("Spawn Settings")]
     public Vector2 init_speed = new Vector2(1.0f, 0.0f);
-    public float spawn_rate = 1f;
-    private float time;
-    // Start is called before the first frame update
+    public float spawn_rate = 10f; // How many particles per second
+    public int maxParticles = 1000;
+
+    [Header("Time Limits")]
+    public float startDelay = 2.0f;    // How many seconds to WAIT before starting
+    public float spawnDuration = 5.0f; // How long to KEEP spawning (0 = Infinite)
+
+    private float spawnTimer;
+    private float currentActiveTime;
+    private bool isSpawning = false;
+
     void Start()
     {
-        Simulation = GameObject.Find("Simulation");
-        Base_Particle = GameObject.Find("Base_Particle");
+        // Fallback: Find objects if they weren't dragged in Inspector
+        if (Simulation == null) Simulation = GameObject.Find("Simulation");
+        if (Base_Particle == null) Base_Particle = GameObject.Find("Base_Particle");
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Limit the number of particles
-        if (Simulation.transform.childCount < 1000)
+        // 1. Handle the Start Delay
+        if (startDelay > 0)
         {
-            // Spawn particles at a constant rate
-            time += Time.deltaTime;
-            if (time < 1.0f / spawn_rate)
+            startDelay -= Time.deltaTime;
+            return; // Stop here, don't spawn yet
+        }
+
+        // 2. Check if we are within the allowed Duration
+        if (spawnDuration > 0)
+        {
+            currentActiveTime += Time.deltaTime;
+            if (currentActiveTime >= spawnDuration)
             {
+                // Time is up! Stop spawning.
                 return;
             }
-            // Create a new particle at the current position of the object
-            GameObject new_particle = Instantiate(Base_Particle, transform.position, Quaternion.identity);
-
-            // update the particle's position
-            new_particle.GetComponent<Particle>().pos = transform.position;
-            new_particle.GetComponent<Particle>().previous_pos = transform.position;
-            new_particle.GetComponent<Particle>().visual_pos = transform.position;
-            new_particle.GetComponent<Particle>().vel = init_speed;
-
-            // Set as child of the Simulation object
-            new_particle.transform.parent = Simulation.transform;
-
-            // Reset time
-            time = 0.2f;
         }
+
+        // 3. Spawn Logic
+        // Check if we have room for more particles
+        if (Simulation != null && Simulation.transform.childCount < maxParticles)
+        {
+            spawnTimer += Time.deltaTime;
+
+            // Calculate time between spawns (e.g., 10 spawn_rate = 0.1s interval)
+            float interval = 1.0f / spawn_rate;
+
+            if (spawnTimer >= interval)
+            {
+                SpawnParticle();
+                spawnTimer = 0f; // Reset timer cleanly
+            }
+        }
+    }
+
+    void SpawnParticle()
+    {
+        // Create the particle
+        GameObject new_particle = Instantiate(Base_Particle, transform.position, Quaternion.identity);
+
+        // Get the script ONLY ONCE (this is faster/better for performance)
+        Particle pScript = new_particle.GetComponent<Particle>();
+
+        if (pScript != null)
+        {
+            pScript.pos = transform.position;
+            pScript.previous_pos = transform.position;
+            pScript.visual_pos = transform.position;
+            pScript.vel = init_speed;
+        }
+
+        // Organize hierarchy
+        new_particle.transform.parent = Simulation.transform;
     }
 }
