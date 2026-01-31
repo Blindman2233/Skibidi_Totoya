@@ -12,11 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 33d8cb919b0ad4e46acd31bf168a9eba
   - enabled: 1
-    path: Assets/Scenes/Player.unity
-    guid: 7ffe57143daa15048a92897cbe94f9ec
-  - enabled: 1
     path: Assets/Scenes/WaterTest.unity
     guid: 2433cb107b95b4348b3c25b0d172b9e8
+  - enabled: 1
+    path: Assets/Scenes/Player.unity
+    guid: 7ffe57143daa15048a92897cbe94f9ec
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

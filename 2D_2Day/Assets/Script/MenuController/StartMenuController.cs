@@ -5,7 +5,7 @@ public class StartMenuController : MonoBehaviour
 {
     public void OnstartClick()
     {
-        SceneManager.LoadScene("Player");
+        SceneManager.LoadScene("WaterTest");
     }
     public void OnExitClick()
     {

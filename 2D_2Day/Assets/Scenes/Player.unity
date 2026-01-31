@@ -2388,8 +2388,8 @@ MonoBehaviour:
   - My brother would love to meet you!
   audioSource: {fileID: 687173134}
   dialogueSound: {fileID: 8300000, guid: 9462446c7e8e8dc43a29fcb91984e330, type: 3}
-  minPitch: 1.01
-  maxPitch: 1.118
+  minPitch: 1.225
+  maxPitch: 1.333
   soundFrequency: 2
 --- !u!114 &294070016
 MonoBehaviour:
