@@ -21,11 +21,15 @@ public class Dialogue : MonoBehaviour
     [Tooltip("Play sound every X characters. 1 = Every letter, 2 = Every other letter.")]
     public int soundFrequency = 2;
 
-    [Header("After Dialogue Settings")]
-    public GameObject uiToActivate;      // Drag your Win Screen/Button here
+    // --- NEW SECTION ---
+    [Header("Before Dialogue Settings")]
+    [Tooltip("These objects turn ON immediately when dialogue starts")]
+    public GameObject[] objectsToActivateBefore;
+    // -------------------
 
-    // CHANGED: This is now an Array [] so you can add multiple objects (Player, Door, Key, etc.)
-    public GameObject[] objectsToActivate;
+    [Header("After Dialogue Settings")]
+    public GameObject uiToActivate;
+    public GameObject[] objectsToActivate; // Activates when finished
 
     private int index;
 
@@ -33,10 +37,19 @@ public class Dialogue : MonoBehaviour
     {
         textCom.text = string.Empty;
 
-        // 1. Hide the UI at start
+        // 1. Activate the "Before" objects immediately
+        if (objectsToActivateBefore != null)
+        {
+            foreach (GameObject obj in objectsToActivateBefore)
+            {
+                if (obj != null) obj.SetActive(true);
+            }
+        }
+
+        // 2. Hide the "After" UI at start
         if (uiToActivate != null) uiToActivate.SetActive(false);
 
-        // 2. Hide ALL objects in the list at start
+        // 3. Hide the "After" objects at start
         if (objectsToActivate != null)
         {
             foreach (GameObject obj in objectsToActivate)
@@ -112,10 +125,10 @@ public class Dialogue : MonoBehaviour
         {
             // --- DIALOGUE IS DONE! ---
 
-            // 1. Turn on the UI
+            // Turn on the UI
             if (uiToActivate != null) uiToActivate.SetActive(true);
 
-            // 2. Turn on ALL objects in the list
+            // Turn on "After" Objects
             if (objectsToActivate != null)
             {
                 foreach (GameObject obj in objectsToActivate)
@@ -124,7 +137,7 @@ public class Dialogue : MonoBehaviour
                 }
             }
 
-            // 3. Turn off the dialogue box
+            // Turn off the dialogue box
             gameObject.SetActive(false);
         }
     }
