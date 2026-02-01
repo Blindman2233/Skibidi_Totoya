@@ -19,13 +19,32 @@ public class Dialogue : MonoBehaviour
     public float maxPitch = 1.1f;
 
     [Tooltip("Play sound every X characters. 1 = Every letter, 2 = Every other letter.")]
-    public int soundFrequency = 2; // Set to 2 for a cleaner "Undertale" sound
+    public int soundFrequency = 2;
+
+    [Header("After Dialogue Settings")]
+    public GameObject uiToActivate;      // Drag your Win Screen/Button here
+
+    // CHANGED: This is now an Array [] so you can add multiple objects (Player, Door, Key, etc.)
+    public GameObject[] objectsToActivate;
 
     private int index;
 
     void Start()
     {
         textCom.text = string.Empty;
+
+        // 1. Hide the UI at start
+        if (uiToActivate != null) uiToActivate.SetActive(false);
+
+        // 2. Hide ALL objects in the list at start
+        if (objectsToActivate != null)
+        {
+            foreach (GameObject obj in objectsToActivate)
+            {
+                if (obj != null) obj.SetActive(false);
+            }
+        }
+
         StartDialogue();
     }
 
@@ -41,7 +60,6 @@ public class Dialogue : MonoBehaviour
             {
                 StopAllCoroutines();
                 textCom.text = dialogueLines[index];
-                // Optional: Play one final beep when skipping to end
                 if (audioSource != null) audioSource.Stop();
             }
         }
@@ -57,34 +75,26 @@ public class Dialogue : MonoBehaviour
     {
         textCom.text = string.Empty;
 
-        // Assign the clip ONCE at the start so we can use Play() safely
         if (audioSource != null && dialogueSound != null)
         {
             audioSource.clip = dialogueSound;
         }
 
-        int charCount = 0; // To track when to beep
+        int charCount = 0;
 
         foreach (char c in dialogueLines[index].ToCharArray())
         {
             textCom.text += c;
             charCount++;
 
-            // --- FIXED SOUND LOGIC ---
             if (audioSource != null && dialogueSound != null)
             {
-                // 1. Don't beep for spaces
-                // 2. Only beep based on frequency (e.g., every 2nd letter)
                 if (c != ' ' && charCount % soundFrequency == 0)
                 {
                     audioSource.pitch = Random.Range(minPitch, maxPitch);
-
-                    // THE FIX: Play() restarts the sound, cutting off the old one.
-                    // This stops the volume from exploding.
                     audioSource.Play();
                 }
             }
-            // -----------------------------
 
             yield return new WaitForSeconds(textSpeed);
         }
@@ -100,6 +110,21 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
+            // --- DIALOGUE IS DONE! ---
+
+            // 1. Turn on the UI
+            if (uiToActivate != null) uiToActivate.SetActive(true);
+
+            // 2. Turn on ALL objects in the list
+            if (objectsToActivate != null)
+            {
+                foreach (GameObject obj in objectsToActivate)
+                {
+                    if (obj != null) obj.SetActive(true);
+                }
+            }
+
+            // 3. Turn off the dialogue box
             gameObject.SetActive(false);
         }
     }

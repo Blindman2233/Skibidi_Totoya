@@ -5,7 +5,12 @@ public class Shower : MonoBehaviour
     [Header("References")]
     public GameObject Simulation;
     public GameObject Base_Particle;
-    public GameObject winUI; // Drag your Win Screen/Panel here!
+
+    [Header("End Level Events")]
+    public GameObject winUI;              // Optional: Drag Win Screen here
+
+    // CHANGED: This is now an Array [] so you can add multiple items
+    public GameObject[] objectsToDeactivate;
 
     [Header("Spawn Settings")]
     public Vector2 init_speed = new Vector2(1.0f, 0.0f);
@@ -13,22 +18,21 @@ public class Shower : MonoBehaviour
     public int maxParticles = 1000;
 
     [Header("Time Limits")]
-    public float startDelay = 2.0f;    // Wait before starting
-    public float spawnDuration = 5.0f; // How long to spawn water
-    public float winDelay = 3.0f;      // How long to wait AFTER water stops before showing Win UI
+    public float startDelay = 2.0f;
+    public float spawnDuration = 5.0f;
+    public float deactivateDelay = 4.0f;   // Wait this long AFTER water stops
 
     // Internal Timers & Flags
     private float spawnTimer;
     private float currentActiveTime;
-    private bool isFinishedSpawning = false; // Tracks if water is done
-    private bool hasWon = false;             // Tracks if we already showed the UI
+    private bool isFinishedSpawning = false;
+    private bool levelComplete = false;
 
     void Start()
     {
         if (Simulation == null) Simulation = GameObject.Find("Simulation");
         if (Base_Particle == null) Base_Particle = GameObject.Find("Base_Particle");
 
-        // Make sure Win UI is hidden when level starts
         if (winUI != null) winUI.SetActive(false);
     }
 
@@ -44,37 +48,32 @@ public class Shower : MonoBehaviour
         // 2. Handle Spawning Phase
         if (!isFinishedSpawning)
         {
-            // Count up how long we have been spawning
             currentActiveTime += Time.deltaTime;
 
-            // Check if time is up
             if (currentActiveTime >= spawnDuration)
             {
-                isFinishedSpawning = true; // Mark as done!
+                isFinishedSpawning = true;
             }
             else
             {
-                // Run the standard spawn logic
                 PerformSpawning();
             }
         }
 
-        // 3. Handle Win Phase (Only runs after spawning is done)
-        if (isFinishedSpawning && !hasWon)
+        // 3. Handle Deactivation Delay (Runs only after water stops)
+        if (isFinishedSpawning && !levelComplete)
         {
-            // Countdown the 3 seconds
-            winDelay -= Time.deltaTime;
+            deactivateDelay -= Time.deltaTime;
 
-            if (winDelay <= 0)
+            if (deactivateDelay <= 0)
             {
-                ShowWinScreen();
+                TriggerEndEvents();
             }
         }
     }
 
     void PerformSpawning()
     {
-        // Safety check
         if (Simulation != null && Simulation.transform.childCount < maxParticles)
         {
             spawnTimer += Time.deltaTime;
@@ -104,11 +103,24 @@ public class Shower : MonoBehaviour
         new_particle.transform.parent = Simulation.transform;
     }
 
-    void ShowWinScreen()
+    void TriggerEndEvents()
     {
-        hasWon = true; // Ensure this only happens once
-        Debug.Log("Level Complete!");
+        levelComplete = true;
+        Debug.Log("Time is up! Deactivating objects...");
 
+        // 1. Loop through ALL objects in the list and turn them off
+        if (objectsToDeactivate != null)
+        {
+            foreach (GameObject obj in objectsToDeactivate)
+            {
+                if (obj != null)
+                {
+                    obj.SetActive(false);
+                }
+            }
+        }
+
+        // 2. Show Win UI
         if (winUI != null)
         {
             winUI.SetActive(true);
