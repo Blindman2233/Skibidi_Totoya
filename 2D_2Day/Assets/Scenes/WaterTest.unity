@@ -8712,12 +8712,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue
   textCom: {fileID: 1474039318}
   dialogueLines:
+<<<<<<< Updated upstream
   - Whats 9+10
   textSpeed: 0.05
 <<<<<<< Updated upstream
   dialogueLines:
   - "\u0E19\u0E35\u0E48\u0E19\u0E32\u0E22..\u0E02\u0E2D\u0E19\u0E49\u0E33\u0E41\u0E01\u0E49\u0E27\u0E19\u0E36\u0E07"
   - "\u0E02\u0E2D\u0E14\u0E48\u0E27\u0E19\u0E46\u0E40\u0E25\u0E22"
+=======
+  - Hello 1
+  - Two
+  textSpeed: 0.05
+  choicePanel: {fileID: 1363603209}
+  correctResponse:
+  - Yes...4
+  - Why...4
+  wrongResponse:
+  - No...6
+  - Die...7
+  - do not...8
+  - Love it.....9
+>>>>>>> Stashed changes
   audioSource: {fileID: 448290720}
   dialogueSound: {fileID: 8300000, guid: 9462446c7e8e8dc43a29fcb91984e330, type: 3}
   minPitch: 1.225
@@ -8976,8 +8991,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+<<<<<<< Updated upstream
 --- !u!114 &1356763038
 MonoBehaviour:
+=======
+--- !u!4 &1363603210
+Transform:
+>>>>>>> Stashed changes
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
