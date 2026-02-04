@@ -1069,6 +1069,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8605667784124917665, guid: 051fb51f18be3c14fbc9f384c070546e, type: 3}
+      propertyPath: m_Size.x
+      value: 5.7507334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605667784124917665, guid: 051fb51f18be3c14fbc9f384c070546e, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.107034124
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1276,7 +1284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractNPC
   promptObject: {fileID: 1349931797}
-  text: {fileID: 0}
+  text: {fileID: 1349931797}
 --- !u!1 &1732230175
 GameObject:
   m_ObjectHideFlags: 0

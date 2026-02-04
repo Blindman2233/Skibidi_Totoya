@@ -26,9 +26,13 @@ public class InteractNPC : MonoBehaviour
             {
                 // สั่งให้บทสนทนาเริ่มทำงาน
                 dialogueActivator.ActivateDialogue();
-
+                Debug.Log("OK fine");
                 // (Option) ซ่อนปุ่ม E ทันทีที่เริ่มคุยเพื่อไม่ให้เกะกะสายตา
                 HidePrompt();
+            }
+            else
+            {
+                Debug.LogError("หา DialogueActivetor ใน NPC ตัวนี้ไม่เจอ!");
             }
         }
     }

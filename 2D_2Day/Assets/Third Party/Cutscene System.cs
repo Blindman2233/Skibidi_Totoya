@@ -51,9 +51,10 @@ public class CutsceneSystem : MonoBehaviour
         }
     }
 
-    public void OnClickNext() // เรียกใช้เมื่อคลิกหน้าจอ
+    public void OnClickNext()
     {
-        if (currentLines[currentIndex].hasChoices) return; // ถ้ามีตัวเลือก ต้องกดเลือกก่อนถึงจะไปต่อได้
+        if (currentLines == null || currentIndex >= currentLines.Count) return;
+        if (currentLines[currentIndex].hasChoices) return;
 
         currentIndex++;
         DisplayLineData();
@@ -61,19 +62,30 @@ public class CutsceneSystem : MonoBehaviour
 
     private void ShowChoices(DialogueChoice[] choices)
     {
-        // สร้างปุ่มตามจำนวน Choice และกำหนด index ที่จะกระโดดไป
+        ClearChoices(); // ล้างของเก่าก่อนสร้างใหม่
+        choiceParent.SetActive(true); // เปิด Panel ตัวเลือก
+
         foreach (var choice in choices)
         {
+            DialogueChoice tempChoice = choice; // สร้างตัวแปรชั่วคราวมารับค่า
             Button btn = Instantiate(choiceButtonPrefab, choiceParent.transform);
-            btn.GetComponentInChildren<TextMeshProUGUI>().text = choice.choiceText;
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = tempChoice.choiceText;
+
             btn.onClick.AddListener(() => {
-                currentIndex = choice.nextLineIndex; // กระโดดข้าม Line ตามที่กำหนด [00:08:05]
+                currentIndex = tempChoice.nextLineIndex;
+                choiceParent.SetActive(false); // ปิด Panel เมื่อเลือกแล้ว
                 ClearChoices();
                 DisplayLineData();
             });
         }
     }
 
-    private void ClearChoices() { /* Code สำหรับลบปุ่มเก่าออก */ }
+    private void ClearChoices() 
+    {
+        foreach (Transform child in choiceParent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
     private void EndCutscene() { dialoguePanel.SetActive(false) ; }
 }
