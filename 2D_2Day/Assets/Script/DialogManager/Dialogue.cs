@@ -1,18 +1,25 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI; // Required for using the Image component
 
 public class Dialogue : MonoBehaviour
 {
     [Header("UI References")]
     public TextMeshProUGUI textCom;
-    public string[] dialogueLines; // Your initial question
+    public string[] dialogueLines;
     public float textSpeed = 0.05f;
 
+    [Header("Portrait Settings")]
+    public Image portraitSlot;       // Drag your UI Image component here
+    public Sprite defaultPortrait;   // The image for the main question
+    public Sprite correctPortrait;   // Image for the correct response
+    public Sprite wrongPortrait;     // Image for the wrong response
+
     [Header("Choice Settings")]
-    public GameObject choicePanel;      // The container for your 2 buttons
-    public string[] correctResponse;    // Dialogue if they pick 'Correct'
-    public string[] wrongResponse;      // Dialogue if they pick 'Wrong'
+    public GameObject choicePanel;
+    public string[] correctResponse;
+    public string[] wrongResponse;
 
     [Header("Audio (Undertale Style)")]
     public AudioSource audioSource;
@@ -22,12 +29,12 @@ public class Dialogue : MonoBehaviour
     public int soundFrequency = 2;
 
     [Header("Activation Settings")]
-    public GameObject[] activateBefore; // Turns ON at start
-    public GameObject[] activateAfter;  // Turns ON ONLY after the correct response ends
+    public GameObject[] activateBefore;
+    public GameObject[] activateAfter;
 
     private int index;
-    private bool isChoosing = false;      // Stops clicking while buttons are active
-    private bool isShowingResult = false;  // Tracks if we are playing response lines
+    private bool isChoosing = false;
+    private bool isShowingResult = false;
     private WaitForSeconds delay;
 
     void Start()
@@ -35,7 +42,12 @@ public class Dialogue : MonoBehaviour
         delay = new WaitForSeconds(textSpeed);
         textCom.text = string.Empty;
 
-        // Setup initial states
+        // Set the initial portrait
+        if (portraitSlot != null && defaultPortrait != null)
+        {
+            portraitSlot.sprite = defaultPortrait;
+        }
+
         if (choicePanel != null) choicePanel.SetActive(false);
         ToggleGroup(activateBefore, true);
         ToggleGroup(activateAfter, false);
@@ -45,7 +57,6 @@ public class Dialogue : MonoBehaviour
 
     void Update()
     {
-        // Don't skip text if the player needs to pick a button
         if (isChoosing) return;
 
         if (Input.GetMouseButtonDown(0))
@@ -65,6 +76,12 @@ public class Dialogue : MonoBehaviour
 
     public void StartDialogue(string[] newLines)
     {
+        if (newLines == null || newLines.Length == 0)
+        {
+            FinishDialogue();
+            return;
+        }
+
         dialogueLines = newLines;
         index = 0;
         isChoosing = false;
@@ -85,7 +102,7 @@ public class Dialogue : MonoBehaviour
             if (audioSource != null && dialogueSound != null && c != ' ' && charCount % soundFrequency == 0)
             {
                 audioSource.pitch = Random.Range(minPitch, maxPitch);
-                audioSource.Play(); // Stops audio stacking from your video
+                audioSource.Play();
             }
             yield return delay;
         }
@@ -100,7 +117,6 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-            // If the question is over, show the buttons
             if (choicePanel != null && !isChoosing && !isShowingResult)
             {
                 isChoosing = true;
@@ -108,28 +124,46 @@ public class Dialogue : MonoBehaviour
             }
             else
             {
-                // If the response dialogue is finished, turn on win objects
-                if (isShowingResult) ToggleGroup(activateAfter, true);
-                gameObject.SetActive(false);
+                FinishDialogue();
             }
         }
     }
-
-    // --- BUTTON FUNCTIONS ---
-    // Link these to your Buttons' OnClick() events in the Inspector
 
     public void SelectCorrect()
     {
         isShowingResult = true;
         choicePanel.SetActive(false);
-        StartDialogue(correctResponse); // Runs the correct response dialogue
+
+        // Change portrait for the correct answer
+        if (portraitSlot != null && correctPortrait != null)
+        {
+            portraitSlot.sprite = correctPortrait;
+        }
+
+        StartDialogue(correctResponse);
     }
 
     public void SelectWrong()
     {
         isShowingResult = true;
         choicePanel.SetActive(false);
-        StartDialogue(wrongResponse); // Runs the wrong response dialogue
+
+        // Change portrait for the wrong answer
+        if (portraitSlot != null && wrongPortrait != null)
+        {
+            portraitSlot.sprite = wrongPortrait;
+        }
+
+        StartDialogue(wrongResponse);
+    }
+
+    void FinishDialogue()
+    {
+        if (isShowingResult && dialogueLines == correctResponse)
+        {
+            ToggleGroup(activateAfter, true);
+        }
+        gameObject.SetActive(false);
     }
 
     void ToggleGroup(GameObject[] group, bool state)
