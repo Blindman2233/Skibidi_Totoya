@@ -1,17 +1,30 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartMenuController : MonoBehaviour 
+public class StartMenuController : MonoBehaviour
 {
-    public void OnstartClick()
+    [Header("Scene Settings")]
+    [Tooltip("Type the exact name of the scene you want to load")]
+    public string sceneToLoad;
+
+    public void OnStartClick()
     {
-        SceneManager.LoadScene("WaterTest");
+        if (!string.IsNullOrEmpty(sceneToLoad))
+        {
+            SceneManager.LoadScene(sceneToLoad);
+        }
+        else
+        {
+            Debug.LogError("No scene name provided in the Inspector!");
+        }
     }
+
     public void OnExitClick()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
 #endif
-        Application.Quit();
     }
-}
+    }

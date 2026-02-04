@@ -1,0 +1,5 @@
+﻿<Solution>
+  <Project Path="PhEngine.ThaiTextCare.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="PhEngine.ThaiTextCare.Editor.csproj" />
+</Solution>
