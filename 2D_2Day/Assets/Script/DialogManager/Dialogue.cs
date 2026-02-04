@@ -1,213 +1,143 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
-public class DialogueConfig : MonoBehaviour
+public class Dialogue : MonoBehaviour
 {
-    [System.Serializable]
-    public class ActorMovement
-    {
-        public string character;
-        public GameObject actorGameObject;
-        public Vector2 actorStartPosition;
-        public Vector2 actorEndPosition;
-        public bool leaveScene;
-    }
-
-    [System.Serializable]
-    public class DialogueChoice
-    {
-        public string choiceText;
-        public GameObject nextDialogueObject; // เชื่อมไปยัง Script Dialogue ตัวถัดไป
-    }
-
-    [System.Serializable]
-    public class DialogueLine
-    {
-        [Header("Text Event")]
-        public bool isTextEvent = true;
-        [TextArea(3, 5)] public string lineText;
-        public string characterToShow;
-        public string characterExpression;
-
-        // --- ย้ายเสียงมาไว้ในแต่ละบรรทัดที่นี่ ---
-        public AudioClip dialogueSound;
-
-        [Header("Movement Event")]
-        public bool isMovementEvent;
-        public List<ActorMovement> actorsInScene;
-
-        [Header("Choices")]
-        public bool hasChoices;
-        public List<DialogueChoice> choices;
-    }
-
-    [Header("Main Settings")]
-    public List<DialogueLine> dialogueLines;
-    public TextMeshProUGUI textDisplay;
+    [Header("UI References")]
+    public TextMeshProUGUI textCom;
+    public string[] dialogueLines; // Your initial question
     public float textSpeed = 0.05f;
 
-    [Header("Audio Config")]
+    [Header("Choice Settings")]
+    public GameObject choicePanel;      // The container for your 2 buttons
+    public string[] correctResponse;    // Dialogue if they pick 'Correct'
+    public string[] wrongResponse;      // Dialogue if they pick 'Wrong'
+
+    [Header("Audio (Undertale Style)")]
     public AudioSource audioSource;
+    public AudioClip dialogueSound;
     [Range(0.5f, 1.5f)] public float minPitch = 0.9f;
     [Range(0.5f, 1.5f)] public float maxPitch = 1.1f;
-    public int soundFrequency = 2; // เล่นเสียงทุกๆ X ตัวอักษร
+    public int soundFrequency = 2;
 
-    [Header("UI Components")]
-    public GameObject choicePanel;
-    public GameObject choiceButtonPrefab;
-    public GameObject[] objectsToEnableAtStart;
-    public GameObject[] objectsToEnableAtEnd;
+    [Header("Activation Settings")]
+    public GameObject[] activateBefore; // Turns ON at start
+    public GameObject[] activateAfter;  // Turns ON ONLY after the correct response ends
 
     private int index;
-    private bool isTyping;
+    private bool isChoosing = false;      // Stops clicking while buttons are active
+    private bool isShowingResult = false;  // Tracks if we are playing response lines
+    private WaitForSeconds delay;
 
     void Start()
     {
-        textDisplay.text = string.Empty;
+        delay = new WaitForSeconds(textSpeed);
+        textCom.text = string.Empty;
+
+        // Setup initial states
         if (choicePanel != null) choicePanel.SetActive(false);
+        ToggleGroup(activateBefore, true);
+        ToggleGroup(activateAfter, false);
 
-        foreach (GameObject obj in objectsToEnableAtStart) if (obj) obj.SetActive(true);
-        foreach (GameObject obj in objectsToEnableAtEnd) if (obj) obj.SetActive(false);
-
-        StartDialogue();
+        StartDialogue(dialogueLines);
     }
 
     void Update()
     {
-        // คลิกเพื่อข้ามการพิมพ์ หรือไปประโยคถัดไป (ยกเว้นตอนมี Choice ขึ้นมา)
-        if (Input.GetMouseButtonDown(0) && (choicePanel == null || !choicePanel.activeSelf))
+        // Don't skip text if the player needs to pick a button
+        if (isChoosing) return;
+
+        if (Input.GetMouseButtonDown(0))
         {
-            if (textDisplay.text == dialogueLines[index].lineText)
+            if (textCom.text == dialogueLines[index])
             {
                 NextLine();
             }
             else
             {
                 StopAllCoroutines();
-                textDisplay.text = dialogueLines[index].lineText;
-                isTyping = false;
+                textCom.text = dialogueLines[index];
+                if (audioSource != null) audioSource.Stop();
             }
         }
     }
 
-    void StartDialogue()
+    public void StartDialogue(string[] newLines)
     {
+        dialogueLines = newLines;
         index = 0;
-        DisplayLine();
+        isChoosing = false;
+        StartCoroutine(TypeLine());
     }
 
-    void DisplayLine()
+    IEnumerator TypeLine()
     {
-        DialogueLine current = dialogueLines[index];
+        textCom.text = "";
+        if (audioSource != null) audioSource.clip = dialogueSound;
 
-        // 1. จัดการเรื่องการเคลื่อนที่
-        if (current.isMovementEvent)
-        {
-            foreach (var actor in current.actorsInScene)
-            {
-                if (actor.actorGameObject != null)
-                {
-                    StartCoroutine(AnimateActor(actor));
-                }
-            }
-        }
-
-        // 2. เริ่มพิมพ์ข้อความ
-        if (current.isTextEvent)
-        {
-            StartCoroutine(TypeEffect());
-        }
-    }
-
-    IEnumerator AnimateActor(ActorMovement actor)
-    {
-        float progress = 0;
-        actor.actorGameObject.transform.localPosition = actor.actorStartPosition;
-
-        while (progress < 1f)
-        {
-            progress += Time.deltaTime * 2f; // ความเร็วการเคลื่อนที่
-            actor.actorGameObject.transform.localPosition = Vector2.Lerp(actor.actorStartPosition, actor.actorEndPosition, progress);
-            yield return null;
-        }
-
-        if (actor.leaveScene) actor.actorGameObject.SetActive(false);
-    }
-
-    IEnumerator TypeEffect()
-    {
-        isTyping = true;
-        textDisplay.text = string.Empty;
         int charCount = 0;
-
-        // ดึงไฟล์เสียงของบรรทัดปัจจุบัน
-        AudioClip currentClip = dialogueLines[index].dialogueSound;
-
-        foreach (char letter in dialogueLines[index].lineText.ToCharArray())
+        foreach (char c in dialogueLines[index])
         {
-            textDisplay.text += letter;
+            textCom.text += c;
             charCount++;
 
-            // เล่นเสียงเฉพาะตัวของบรรทัดนี้
-            if (audioSource != null && currentClip != null && letter != ' ' && charCount % soundFrequency == 0)
+            if (audioSource != null && dialogueSound != null && c != ' ' && charCount % soundFrequency == 0)
             {
                 audioSource.pitch = Random.Range(minPitch, maxPitch);
-                audioSource.PlayOneShot(currentClip);
+                audioSource.Play(); // Stops audio stacking from your video
             }
-            yield return new WaitForSeconds(textSpeed);
-        }
-        isTyping = false;
-
-        // ถ้าพิมพ์จบแล้วมี Choice ให้แสดงทันที
-        if (dialogueLines[index].hasChoices)
-        {
-            Invoke("ShowChoiceUI", 0.2f);
-        }
-    }
-
-    void ShowChoiceUI()
-    {
-        if (choicePanel == null) return;
-
-        choicePanel.SetActive(true);
-        foreach (Transform child in choicePanel.transform) Destroy(child.gameObject);
-
-        foreach (var choice in dialogueLines[index].choices)
-        {
-            GameObject btn = Instantiate(choiceButtonPrefab, choicePanel.transform);
-            btn.GetComponentInChildren<TextMeshProUGUI>().text = choice.choiceText;
-            btn.GetComponent<Button>().onClick.AddListener(() => OnChoiceSelected(choice.nextDialogueObject));
-        }
-    }
-
-    void OnChoiceSelected(GameObject nextTarget)
-    {
-        if (nextTarget != null)
-        {
-            nextTarget.SetActive(true);
-            this.gameObject.SetActive(false);
+            yield return delay;
         }
     }
 
     void NextLine()
     {
-        if (index < dialogueLines.Count - 1)
+        if (index < dialogueLines.Length - 1)
         {
             index++;
-            DisplayLine();
+            StartCoroutine(TypeLine());
         }
-        else if (!dialogueLines[index].hasChoices)
+        else
         {
-            EndConversation();
+            // If the question is over, show the buttons
+            if (choicePanel != null && !isChoosing && !isShowingResult)
+            {
+                isChoosing = true;
+                choicePanel.SetActive(true);
+            }
+            else
+            {
+                // If the response dialogue is finished, turn on win objects
+                if (isShowingResult) ToggleGroup(activateAfter, true);
+                gameObject.SetActive(false);
+            }
         }
     }
 
-    void EndConversation()
+    // --- BUTTON FUNCTIONS ---
+    // Link these to your Buttons' OnClick() events in the Inspector
+
+    public void SelectCorrect()
     {
-        foreach (GameObject obj in objectsToEnableAtEnd) if (obj) obj.SetActive(true);
-        this.gameObject.SetActive(false);
+        isShowingResult = true;
+        choicePanel.SetActive(false);
+        StartDialogue(correctResponse); // Runs the correct response dialogue
+    }
+
+    public void SelectWrong()
+    {
+        isShowingResult = true;
+        choicePanel.SetActive(false);
+        StartDialogue(wrongResponse); // Runs the wrong response dialogue
+    }
+
+    void ToggleGroup(GameObject[] group, bool state)
+    {
+        if (group == null) return;
+        foreach (GameObject obj in group)
+        {
+            if (obj != null) obj.SetActive(state);
+        }
     }
 }
