@@ -1,27 +1,45 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 public class InteractNPC : MonoBehaviour
 {
-    [Header("Scene Settings")]
-    public GameObject text;
 
     [Header("UI Settings")]
-    [Tooltip("Drag the 'E' button object here")]
-    public GameObject promptObject; // The floating "E" icon
+    public GameObject promptObject; // ไอคอนปุ่ม "E"
+    public GameObject text;         // ข้อความเช่น "Press E to Talk"
 
-    // --- SHOW / HIDE PROMPT AUTOMATICALLY ---
+    private DialogueActivetor dialogueActivator;
+    private bool isPlayerInRange = false;
+
+    private void Awake()
+    {
+        // ดึง Component DialogueActivator ที่อยู่ใน Object เดียวกันมาเตรียมไว้
+        dialogueActivator = GetComponent<DialogueActivetor>();
+    }
+
+    private void Update()
+    {
+        // ถ้าผู้เล่นอยู่ในระยะ และกดปุ่ม E
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+        {
+            if (dialogueActivator != null)
+            {
+                // สั่งให้บทสนทนาเริ่มทำงาน
+                dialogueActivator.ActivateDialogue();
+
+                // (Option) ซ่อนปุ่ม E ทันทีที่เริ่มคุยเพื่อไม่ให้เกะกะสายตา
+                HidePrompt();
+            }
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the thing colliding is the Player
+
         if (other.CompareTag("Player"))
         {
-            if (promptObject != null)
-            {
-                promptObject.SetActive(true);
-                text.SetActive(true);
-            }
+            isPlayerInRange = true;
+            ShowPrompt();
         }
     }
 
@@ -29,11 +47,20 @@ public class InteractNPC : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (promptObject != null)
-            {
-                promptObject.SetActive(false); // Hide "E"
-                text.SetActive(false);
-            }
+            isPlayerInRange = false;
+            HidePrompt();
         }
+    }
+
+    private void ShowPrompt()
+    {
+        if (promptObject != null) promptObject.SetActive(true);
+        if (text != null) text.SetActive(true);
+    }
+
+    private void HidePrompt()
+    {
+        if (promptObject != null) promptObject.SetActive(false);
+        if (text != null) text.SetActive(false);
     }
 }

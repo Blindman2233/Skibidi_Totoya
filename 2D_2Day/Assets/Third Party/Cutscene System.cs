@@ -15,24 +15,24 @@ public class CutsceneSystem : MonoBehaviour
     public GameObject choiceParent; // Container สำหรับปุ่มตัวเลือก
     public Button choiceButtonPrefab;
 
-    private List<DialogueLine> currentLines;
+    private List<DialogueLineData> currentLines;
     private int currentIndex = 0;
 
     private void Awake() => Instance = this;
 
-    public void StartCutscene(List<DialogueLine> lines)
+    public void StartCutscene(List<DialogueLineData> lines)
     {
         currentLines = lines;
         currentIndex = 0;
         dialoguePanel.SetActive(true);
-        DisplayLine();
+        DisplayLineData();
     }
 
-    public void DisplayLine()
+    public void DisplayLineData()
     {
         if (currentIndex < currentLines.Count)
         {
-            DialogueLine line = currentLines[currentIndex];
+            DialogueLineData line = currentLines[currentIndex];
 
             // อัปเดตข้อมูลบน UI [00:01:31]
             nameText.text = line.characterName;
@@ -56,7 +56,7 @@ public class CutsceneSystem : MonoBehaviour
         if (currentLines[currentIndex].hasChoices) return; // ถ้ามีตัวเลือก ต้องกดเลือกก่อนถึงจะไปต่อได้
 
         currentIndex++;
-        DisplayLine();
+        DisplayLineData();
     }
 
     private void ShowChoices(DialogueChoice[] choices)
@@ -69,11 +69,11 @@ public class CutsceneSystem : MonoBehaviour
             btn.onClick.AddListener(() => {
                 currentIndex = choice.nextLineIndex; // กระโดดข้าม Line ตามที่กำหนด [00:08:05]
                 ClearChoices();
-                DisplayLine();
+                DisplayLineData();
             });
         }
     }
 
     private void ClearChoices() { /* Code สำหรับลบปุ่มเก่าออก */ }
-    private void EndCutscene() { dialoguePanel.SetActive(false); }
+    private void EndCutscene() { dialoguePanel.SetActive(false) ; }
 }
