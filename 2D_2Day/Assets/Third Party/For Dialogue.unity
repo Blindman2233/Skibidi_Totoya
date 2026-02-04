@@ -441,7 +441,7 @@ MonoBehaviour:
   dialogueText: {fileID: 1433208606}
   portraitImage: {fileID: 2092373481}
   dialoguePanel: {fileID: 1364128007}
-  choiceParent: {fileID: 0}
+  choiceParent: {fileID: 967174913}
   choiceButtonPrefab: {fileID: 1460049843}
 --- !u!1 &959487988
 GameObject:
@@ -461,7 +461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &959487989
 RectTransform:
   m_ObjectHideFlags: 0
@@ -475,7 +475,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1364128010}
-  - {fileID: 1460049842}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -546,6 +545,11 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &967174913 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2221635193685205520, guid: 4ebec1babf41b8b45bb5eba762f0731c, type: 3}
+  m_PrefabInstance: {fileID: 7957426871520349750}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1096793910
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,7 +949,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1364128008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -999,6 +1003,7 @@ RectTransform:
   - {fileID: 2092373479}
   - {fileID: 1096793911}
   - {fileID: 1732230176}
+  - {fileID: 1460049842}
   m_Father: {fileID: 959487989}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -1097,7 +1102,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8962456190117595094, guid: 4ebec1babf41b8b45bb5eba762f0731c, type: 3}
   m_PrefabInstance: {fileID: 7957426871520349750}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 967174913}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -1213,8 +1218,12 @@ MonoBehaviour:
   - characterName: Lin
     text: I Am You
     characterPortrait: {fileID: 3504054214043631777, guid: f9baaaa9a9fc6d3438a7011c9cb95acb, type: 3}
-    hasChoices: 0
-    choices: []
+    hasChoices: 1
+    choices:
+    - choiceText: Text 1
+      nextLineIndex: 2
+    - choiceText: Text 2
+      nextLineIndex: 2
   - characterName: Lin
     text: 555555
     characterPortrait: {fileID: 3504054214043631777, guid: f9baaaa9a9fc6d3438a7011c9cb95acb, type: 3}
@@ -1560,7 +1569,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 959487989}
+    m_TransformParent: {fileID: 1364128010}
     m_Modifications:
     - target: {fileID: 91187799827248946, guid: 4ebec1babf41b8b45bb5eba762f0731c, type: 3}
       propertyPath: m_Pivot.x
@@ -1595,6 +1604,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 91187799827248946, guid: 4ebec1babf41b8b45bb5eba762f0731c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 6.1765947
+      objectReference: {fileID: 0}
+    - target: {fileID: 91187799827248946, guid: 4ebec1babf41b8b45bb5eba762f0731c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1612,23 +1625,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 91187799827248946, guid: 4ebec1babf41b8b45bb5eba762f0731c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 91187799827248946, guid: 4ebec1babf41b8b45bb5eba762f0731c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 91187799827248946, guid: 4ebec1babf41b8b45bb5eba762f0731c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 91187799827248946, guid: 4ebec1babf41b8b45bb5eba762f0731c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -762
       objectReference: {fileID: 0}
     - target: {fileID: 91187799827248946, guid: 4ebec1babf41b8b45bb5eba762f0731c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 43
+      value: 663
       objectReference: {fileID: 0}
     - target: {fileID: 91187799827248946, guid: 4ebec1babf41b8b45bb5eba762f0731c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

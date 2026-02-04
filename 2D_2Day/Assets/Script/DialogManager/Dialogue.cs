@@ -5,64 +5,49 @@ using TMPro;
 
 public class Dialogue : MonoBehaviour
 {
+    [Header("UI References")]
     public TextMeshProUGUI textCom;
-    public float textSpeed;
     public string[] dialogueLines;
+    public float textSpeed = 0.05f;
 
-    [Header("Audio Settings")]
+    [Header("Choice Settings")]
+    public GameObject choicePanel;      // Drag the Panel holding your 2 buttons here
+    public string[] correctResponse;    // Dialogue that plays if they pick 'Correct'
+    public string[] wrongResponse;      // Dialogue that plays if they pick 'Wrong'
+
+    [Header("Audio (Undertale Style)")]
     public AudioSource audioSource;
     public AudioClip dialogueSound;
-
-    [Range(0.5f, 1.5f)]
-    public float minPitch = 0.9f;
-    [Range(0.5f, 1.5f)]
-    public float maxPitch = 1.1f;
-
-    [Tooltip("Play sound every X characters. 1 = Every letter, 2 = Every other letter.")]
+    [Range(0.5f, 1.5f)] public float minPitch = 0.9f;
+    [Range(0.5f, 1.5f)] public float maxPitch = 1.1f;
     public int soundFrequency = 2;
 
-    // --- NEW SECTION ---
-    [Header("Before Dialogue Settings")]
-    [Tooltip("These objects turn ON immediately when dialogue starts")]
-    public GameObject[] objectsToActivateBefore;
-    // -------------------
-
-    [Header("After Dialogue Settings")]
-    public GameObject uiToActivate;
-    public GameObject[] objectsToActivate; // Activates when finished
+    [Header("Activation Settings")]
+    public GameObject[] activateBefore; // Turns ON at start
+    public GameObject[] activateAfter;  // Turns ON ONLY after the correct choice
 
     private int index;
+    private bool isChoosing = false; // Prevents skipping dialogue while buttons are visible
+    private WaitForSeconds delay;
 
     void Start()
     {
+        delay = new WaitForSeconds(textSpeed);
         textCom.text = string.Empty;
 
-        // 1. Activate the "Before" objects immediately
-        if (objectsToActivateBefore != null)
-        {
-            foreach (GameObject obj in objectsToActivateBefore)
-            {
-                if (obj != null) obj.SetActive(true);
-            }
-        }
+        // Ensure everything is in the right state at the start
+        if (choicePanel != null) choicePanel.SetActive(false);
+        ToggleGroup(activateBefore, true);  //
+        ToggleGroup(activateAfter, false);  //
 
-        // 2. Hide the "After" UI at start
-        if (uiToActivate != null) uiToActivate.SetActive(false);
-
-        // 3. Hide the "After" objects at start
-        if (objectsToActivate != null)
-        {
-            foreach (GameObject obj in objectsToActivate)
-            {
-                if (obj != null) obj.SetActive(false);
-            }
-        }
-
-        StartDialogue();
+        StartDialogue(dialogueLines);
     }
 
     void Update()
     {
+        // Stop player from clicking through if they need to pick a button
+        if (isChoosing) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (textCom.text == dialogueLines[index])
@@ -71,6 +56,7 @@ public class Dialogue : MonoBehaviour
             }
             else
             {
+                // Skip typing animation
                 StopAllCoroutines();
                 textCom.text = dialogueLines[index];
                 if (audioSource != null) audioSource.Stop();
@@ -78,38 +64,33 @@ public class Dialogue : MonoBehaviour
         }
     }
 
-    void StartDialogue()
+    // Now accepts a string array so we can swap between initial lines and responses
+    public void StartDialogue(string[] newLines)
     {
+        dialogueLines = newLines;
         index = 0;
+        isChoosing = false;
         StartCoroutine(TypeLine());
     }
 
     IEnumerator TypeLine()
     {
-        textCom.text = string.Empty;
-
-        if (audioSource != null && dialogueSound != null)
-        {
-            audioSource.clip = dialogueSound;
-        }
+        textCom.text = "";
+        if (audioSource != null) audioSource.clip = dialogueSound;
 
         int charCount = 0;
-
-        foreach (char c in dialogueLines[index].ToCharArray())
+        foreach (char c in dialogueLines[index])
         {
             textCom.text += c;
             charCount++;
 
-            if (audioSource != null && dialogueSound != null)
+            if (audioSource != null && dialogueSound != null && c != ' ' && charCount % soundFrequency == 0)
             {
-                if (c != ' ' && charCount % soundFrequency == 0)
-                {
-                    audioSource.pitch = Random.Range(minPitch, maxPitch);
-                    audioSource.Play();
-                }
+                audioSource.pitch = Random.Range(minPitch, maxPitch);
+                // Play() prevents the "machine gun" stacking sound from your video
+                audioSource.Play();
             }
-
-            yield return new WaitForSeconds(textSpeed);
+            yield return delay;
         }
     }
 
@@ -118,27 +99,47 @@ public class Dialogue : MonoBehaviour
         if (index < dialogueLines.Length - 1)
         {
             index++;
-            textCom.text = string.Empty;
             StartCoroutine(TypeLine());
         }
         else
         {
-            // --- DIALOGUE IS DONE! ---
-
-            // Turn on the UI
-            if (uiToActivate != null) uiToActivate.SetActive(true);
-
-            // Turn on "After" Objects
-            if (objectsToActivate != null)
+            // If we reach the end of the lines and have a choice panel, show it
+            if (choicePanel != null && !isChoosing)
             {
-                foreach (GameObject obj in objectsToActivate)
-                {
-                    if (obj != null) obj.SetActive(true);
-                }
+                isChoosing = true;
+                choicePanel.SetActive(true);
             }
+            else
+            {
+                // If it wasn't a choice moment, just close the box
+                gameObject.SetActive(false); //
+            }
+        }
+    }
 
-            // Turn off the dialogue box
-            gameObject.SetActive(false);
+    // --- CHOICE BUTTON FUNCTIONS ---
+    // Link these to your Button OnClick() events in the Inspector
+
+    public void SelectCorrect()
+    {
+        choicePanel.SetActive(false);
+        ToggleGroup(activateAfter, true); // Success! Turn on the win objects
+        StartDialogue(correctResponse);   // Play the "You're right" dialogue
+    }
+
+    public void SelectWrong()
+    {
+        choicePanel.SetActive(false);
+        StartDialogue(wrongResponse);     // Play the "Try again" dialogue
+    }
+
+    // Helper function to turn lists of objects on or off
+    void ToggleGroup(GameObject[] group, bool state)
+    {
+        if (group == null) return;
+        foreach (GameObject obj in group)
+        {
+            if (obj != null) obj.SetActive(state);
         }
     }
 }
