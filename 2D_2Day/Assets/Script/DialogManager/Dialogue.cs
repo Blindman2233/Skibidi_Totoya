@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI; // Required for using the Image component
+using UnityEngine.UI;
 
 public class Dialogue : MonoBehaviour
 {
@@ -11,10 +11,10 @@ public class Dialogue : MonoBehaviour
     public float textSpeed = 0.05f;
 
     [Header("Portrait Settings")]
-    public Image portraitSlot;       // Drag your UI Image component here
-    public Sprite defaultPortrait;   // The image for the main question
-    public Sprite correctPortrait;   // Image for the correct response
-    public Sprite wrongPortrait;     // Image for the wrong response
+    public Image portraitSlot;
+    public Sprite defaultPortrait;
+    public Sprite correctPortrait;
+    public Sprite wrongPortrait;
 
     [Header("Choice Settings")]
     public GameObject choicePanel;
@@ -32,6 +32,14 @@ public class Dialogue : MonoBehaviour
     public GameObject[] activateBefore;
     public GameObject[] activateAfter;
 
+    // --- NEW DEACTIVATION SETTINGS ---
+    [Header("Deactivation Settings")]
+    [Tooltip("Objects to turn OFF when dialogue starts")]
+    public GameObject[] deactivateBefore;
+    [Tooltip("Objects to turn OFF when dialogue finishes")]
+    public GameObject[] deactivateAfter;
+    // ---------------------------------
+
     private int index;
     private bool isChoosing = false;
     private bool isShowingResult = false;
@@ -42,14 +50,16 @@ public class Dialogue : MonoBehaviour
         delay = new WaitForSeconds(textSpeed);
         textCom.text = string.Empty;
 
-        // Set the initial portrait
         if (portraitSlot != null && defaultPortrait != null)
         {
             portraitSlot.sprite = defaultPortrait;
         }
 
         if (choicePanel != null) choicePanel.SetActive(false);
+
+        // Handle initial activations/deactivations
         ToggleGroup(activateBefore, true);
+        ToggleGroup(deactivateBefore, false); // NEW: Turns off objects at start
         ToggleGroup(activateAfter, false);
 
         StartDialogue(dialogueLines);
@@ -134,7 +144,6 @@ public class Dialogue : MonoBehaviour
         isShowingResult = true;
         choicePanel.SetActive(false);
 
-        // Change portrait for the correct answer
         if (portraitSlot != null && correctPortrait != null)
         {
             portraitSlot.sprite = correctPortrait;
@@ -148,7 +157,6 @@ public class Dialogue : MonoBehaviour
         isShowingResult = true;
         choicePanel.SetActive(false);
 
-        // Change portrait for the wrong answer
         if (portraitSlot != null && wrongPortrait != null)
         {
             portraitSlot.sprite = wrongPortrait;
@@ -159,13 +167,17 @@ public class Dialogue : MonoBehaviour
 
     void FinishDialogue()
     {
+        // Handle end-of-dialogue logic
         if (isShowingResult && dialogueLines == correctResponse)
         {
             ToggleGroup(activateAfter, true);
+            ToggleGroup(deactivateAfter, false); // NEW: Turns off objects at end
         }
+
         gameObject.SetActive(false);
     }
 
+    // This helper function handles the arrays to prevent errors
     void ToggleGroup(GameObject[] group, bool state)
     {
         if (group == null) return;

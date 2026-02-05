@@ -15,7 +15,7 @@ public class SpaceDrag : MonoBehaviour
         {
             // 1. Get the mouse position in the world
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0; // Keep it on the 2D plane
+            mousePos.z = -9.52f; // Keep it on the 2D plane
 
             // 2. Smoothly move the object towards the mouse
             // SmoothDamp automatically handles the speed up/slow down

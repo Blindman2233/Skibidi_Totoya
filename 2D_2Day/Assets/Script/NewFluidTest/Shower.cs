@@ -5,15 +5,14 @@ public class Shower : MonoBehaviour
     [Header("References")]
     public GameObject Simulation;
     public GameObject Base_Particle;
+    public GameObject winUI;
+
+    [Header("Point Settings")]
+    public int pointsPerDrop = 1; // Points gained for each water particle spawned
 
     [Header("End Level Events")]
-    public GameObject winUI;              // Drag Win Screen here
-
-    [Tooltip("These objects disappear when you win (e.g. In-game UI)")]
     public GameObject[] objectsToDeactivate;
-
-    [Tooltip("These objects appear when you win (e.g. Confetti, Next Button)")]
-    public GameObject[] objectsToActivate; // NEW: Array for objects to TURN ON
+    public GameObject[] objectsToActivate;
 
     [Header("Spawn Settings")]
     public Vector2 init_speed = new Vector2(1.0f, 0.0f);
@@ -23,9 +22,8 @@ public class Shower : MonoBehaviour
     [Header("Time Limits")]
     public float startDelay = 2.0f;
     public float spawnDuration = 5.0f;
-    public float deactivateDelay = 4.0f;   // Wait this long AFTER water stops
+    public float deactivateDelay = 4.0f;
 
-    // Internal Timers & Flags
     private float spawnTimer;
     private float currentActiveTime;
     private bool isFinishedSpawning = false;
@@ -35,52 +33,29 @@ public class Shower : MonoBehaviour
     {
         if (Simulation == null) Simulation = GameObject.Find("Simulation");
         if (Base_Particle == null) Base_Particle = GameObject.Find("Base_Particle");
-
         if (winUI != null) winUI.SetActive(false);
 
-        // NEW: Ensure the "Win Objects" are hidden when the game starts
         if (objectsToActivate != null)
         {
-            foreach (GameObject obj in objectsToActivate)
-            {
-                if (obj != null) obj.SetActive(false);
-            }
+            foreach (GameObject obj in objectsToActivate) if (obj != null) obj.SetActive(false);
         }
     }
 
     void Update()
     {
-        // 1. Handle Start Delay
-        if (startDelay > 0)
-        {
-            startDelay -= Time.deltaTime;
-            return;
-        }
+        if (startDelay > 0) { startDelay -= Time.deltaTime; return; }
 
-        // 2. Handle Spawning Phase
         if (!isFinishedSpawning)
         {
             currentActiveTime += Time.deltaTime;
-
-            if (currentActiveTime >= spawnDuration)
-            {
-                isFinishedSpawning = true;
-            }
-            else
-            {
-                PerformSpawning();
-            }
+            if (currentActiveTime >= spawnDuration) isFinishedSpawning = true;
+            else PerformSpawning();
         }
 
-        // 3. Handle End Delay (Runs only after water stops)
         if (isFinishedSpawning && !levelComplete)
         {
             deactivateDelay -= Time.deltaTime;
-
-            if (deactivateDelay <= 0)
-            {
-                TriggerEndEvents();
-            }
+            if (deactivateDelay <= 0) TriggerEndEvents();
         }
     }
 
@@ -102,8 +77,11 @@ public class Shower : MonoBehaviour
     void SpawnParticle()
     {
         GameObject new_particle = Instantiate(Base_Particle, transform.position, Quaternion.identity);
-        Particle pScript = new_particle.GetComponent<Particle>();
 
+        // --- ADDED SCORE LOGIC ---
+        if (ScoreManager.instance != null) ScoreManager.instance.ChangeScore(pointsPerDrop);
+
+        Particle pScript = new_particle.GetComponent<Particle>();
         if (pScript != null)
         {
             pScript.pos = transform.position;
@@ -111,37 +89,14 @@ public class Shower : MonoBehaviour
             pScript.visual_pos = transform.position;
             pScript.vel = init_speed;
         }
-
         new_particle.transform.parent = Simulation.transform;
     }
 
     void TriggerEndEvents()
     {
         levelComplete = true;
-        Debug.Log("Time is up! Switching objects...");
-
-        // 1. Turn OFF objects (Deactivate)
-        if (objectsToDeactivate != null)
-        {
-            foreach (GameObject obj in objectsToDeactivate)
-            {
-                if (obj != null) obj.SetActive(false);
-            }
-        }
-
-        // 2. Turn ON objects (Activate) - NEW!
-        if (objectsToActivate != null)
-        {
-            foreach (GameObject obj in objectsToActivate)
-            {
-                if (obj != null) obj.SetActive(true);
-            }
-        }
-
-        // 3. Show Win UI
-        if (winUI != null)
-        {
-            winUI.SetActive(true);
-        }
+        if (objectsToDeactivate != null) foreach (GameObject obj in objectsToDeactivate) if (obj != null) obj.SetActive(false);
+        if (objectsToActivate != null) foreach (GameObject obj in objectsToActivate) if (obj != null) obj.SetActive(true);
+        if (winUI != null) winUI.SetActive(true);
     }
 }
