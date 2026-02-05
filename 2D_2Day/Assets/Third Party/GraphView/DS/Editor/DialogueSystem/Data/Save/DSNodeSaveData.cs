@@ -16,5 +16,8 @@ namespace DS.Data.Save
         [field: SerializeField] public string GroupID { get; set; }
         [field: SerializeField] public DSDialogueType DialogueType { get; set; }
         [field: SerializeField] public Vector2 Position { get; set; }
+        // ข้อมูลสำหรับ Runtime เพิ่มเติม
+        [field: SerializeField] public AudioClip VoiceClip { get; set; }
+        [field: SerializeField] public Sprite CharacterSprite { get; set; }
     }
 }

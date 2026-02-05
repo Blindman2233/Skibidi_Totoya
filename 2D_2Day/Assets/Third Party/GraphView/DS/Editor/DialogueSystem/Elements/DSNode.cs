@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEditor.UIElements;
 
 namespace DS.Elements
 {
@@ -20,6 +21,9 @@ namespace DS.Elements
         public string Text { get; set; }
         public DSDialogueType DialogueType { get; set; }
         public DSGroup Group { get; set; }
+        // ข้อมูล Runtime เพิ่มเติม
+        public AudioClip VoiceClip { get; set; }
+        public Sprite CharacterSprite { get; set; }
 
         protected DSGraphView graphView;
         private Color defaultBackgroundColor;
@@ -114,6 +118,7 @@ namespace DS.Elements
 
             customDataContainer.AddToClassList("ds-node__custom-data-container");
 
+            // Dialogue text
             Foldout textFoldout = DSElementUtility.CreateFoldout("Dialogue Text");
 
             TextField textTextField = DSElementUtility.CreateTextArea(Text, null, callback => Text = callback.newValue);
@@ -126,6 +131,36 @@ namespace DS.Elements
             textFoldout.Add(textTextField);
 
             customDataContainer.Add(textFoldout);
+
+            // Voice clip & character art
+            Foldout metaFoldout = DSElementUtility.CreateFoldout("Dialogue Meta");
+
+            ObjectField voiceField = new ObjectField("Voice Clip")
+            {
+                objectType = typeof(AudioClip),
+                allowSceneObjects = false,
+                value = VoiceClip
+            };
+            voiceField.RegisterValueChangedCallback(callback =>
+            {
+                VoiceClip = (AudioClip)callback.newValue;
+            });
+
+            ObjectField artField = new ObjectField("Character Art")
+            {
+                objectType = typeof(Sprite),
+                allowSceneObjects = false,
+                value = CharacterSprite
+            };
+            artField.RegisterValueChangedCallback(callback =>
+            {
+                CharacterSprite = (Sprite)callback.newValue;
+            });
+
+            metaFoldout.Add(voiceField);
+            metaFoldout.Add(artField);
+
+            customDataContainer.Add(metaFoldout);
 
             extensionContainer.Add(customDataContainer);
         }

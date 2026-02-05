@@ -71,6 +71,12 @@ namespace DS.Utilities
         {
             List<string> groupNames = new List<string>();
 
+            // Create "Groups" folder only if there is at least one group to save
+            if (groups.Count > 0)
+            {
+                CreateFolder(containerFolderPath, "Groups");
+            }
+
             foreach (DSGroup group in groups)
             {
                 SaveGroupToGraph(group, graphData);
@@ -80,6 +86,12 @@ namespace DS.Utilities
             }
 
             UpdateOldGroups(groupNames, graphData);
+
+            // If there are no groups in this save and an old "Groups" folder is left empty, remove it
+            if (groups.Count == 0)
+            {
+                RemoveFolder($"{containerFolderPath}/Groups");
+            }
         }
 
         private static void SaveGroupToGraph(DSGroup group, DSGraphSaveDataSO graphData)
@@ -165,7 +177,9 @@ namespace DS.Utilities
                 Text = node.Text,
                 GroupID = node.Group?.ID,
                 DialogueType = node.DialogueType,
-                Position = node.GetPosition().position
+                Position = node.GetPosition().position,
+                VoiceClip = node.VoiceClip,
+                CharacterSprite = node.CharacterSprite
             };
 
             graphData.Nodes.Add(nodeData);
@@ -193,7 +207,9 @@ namespace DS.Utilities
                 node.Text,
                 ConvertNodeChoicesToDialogueChoices(node.Choices),
                 node.DialogueType,
-                node.IsStartingNode()
+                node.IsStartingNode(),
+                node.VoiceClip,
+                node.CharacterSprite
             );
 
             createdDialogues.Add(node.ID, dialogue);
@@ -209,7 +225,8 @@ namespace DS.Utilities
             {
                 DSDialogueChoiceData choiceData = new DSDialogueChoiceData()
                 {
-                    Text = nodeChoice.Text
+                    Text = nodeChoice.Text,
+                    GoodnessPointsDelta = nodeChoice.GoodnessPointsDelta
                 };
 
                 dialogueChoices.Add(choiceData);
@@ -325,6 +342,8 @@ namespace DS.Utilities
                 node.ID = nodeData.ID;
                 node.Choices = choices;
                 node.Text = nodeData.Text;
+                node.VoiceClip = nodeData.VoiceClip;
+                node.CharacterSprite = nodeData.CharacterSprite;
 
                 node.Draw();
 
@@ -383,7 +402,6 @@ namespace DS.Utilities
 
             CreateFolder("Assets/DialogueSystem/Dialogues", graphFileName);
             CreateFolder(containerFolderPath, "Global");
-            CreateFolder(containerFolderPath, "Groups");
             CreateFolder($"{containerFolderPath}/Global", "Dialogues");
         }
 
@@ -472,7 +490,8 @@ namespace DS.Utilities
                 DSChoiceSaveData choiceData = new DSChoiceSaveData()
                 {
                     Text = choice.Text,
-                    NodeID = choice.NodeID
+                    NodeID = choice.NodeID,
+                    GoodnessPointsDelta = choice.GoodnessPointsDelta
                 };
 
                 choices.Add(choiceData);

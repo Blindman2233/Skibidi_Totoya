@@ -1,6 +1,7 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.UIElements;
 
 namespace DS.Elements
 {
@@ -19,7 +20,8 @@ namespace DS.Elements
 
             DSChoiceSaveData choiceData = new DSChoiceSaveData()
             {
-                Text = "New Choice"
+                Text = "New Choice",
+                GoodnessPointsDelta = 0
             };
 
             Choices.Add(choiceData);
@@ -35,7 +37,8 @@ namespace DS.Elements
             {
                 DSChoiceSaveData choiceData = new DSChoiceSaveData()
                 {
-                    Text = "New Choice"
+                    Text = "New Choice",
+                    GoodnessPointsDelta = 0
                 };
 
                 Choices.Add(choiceData);
@@ -91,6 +94,7 @@ namespace DS.Elements
             TextField choiceTextField = DSElementUtility.CreateTextField(choiceData.Text, null, callback =>
             {
                 choiceData.Text = callback.newValue;
+                choicePort.portName = callback.newValue;
             });
 
             choiceTextField.AddClasses(
@@ -99,7 +103,17 @@ namespace DS.Elements
                 "ds-node__choice-text-field"
             );
 
+            IntegerField goodnessField = new IntegerField("Goodness")
+            {
+                value = choiceData.GoodnessPointsDelta
+            };
+            goodnessField.RegisterValueChangedCallback(evt =>
+            {
+                choiceData.GoodnessPointsDelta = evt.newValue;
+            });
+
             choicePort.Add(choiceTextField);
+            choicePort.Add(goodnessField);
             choicePort.Add(deleteChoiceButton);
 
             return choicePort;

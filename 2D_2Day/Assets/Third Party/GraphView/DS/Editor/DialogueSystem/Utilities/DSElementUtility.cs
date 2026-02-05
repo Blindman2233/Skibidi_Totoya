@@ -62,5 +62,7 @@ namespace DS.Utilities
 
             return textArea;
         }
+
+        // Reserved for future numeric fields ifต้องการ helper เพิ่มเติม
     }
 }
