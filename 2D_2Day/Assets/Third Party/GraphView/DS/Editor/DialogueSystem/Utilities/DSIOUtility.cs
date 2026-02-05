@@ -373,6 +373,9 @@ namespace DS.Utilities
 
         private static void CreateDefaultFolders()
         {
+            // Ensure full path "Assets/Editor/DialogueSystem/Graphs" exists
+            CreateFolder("Assets", "Editor");
+            CreateFolder("Assets/Editor", "DialogueSystem");
             CreateFolder("Assets/Editor/DialogueSystem", "Graphs");
 
             CreateFolder("Assets", "DialogueSystem");

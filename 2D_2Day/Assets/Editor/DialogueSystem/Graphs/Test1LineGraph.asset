@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0202a3095b7477a4091d56344f0af6b3, type: 3}
+  m_Name: Test1LineGraph
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::DS.Data.Save.DSGraphSaveDataSO
+  <FileName>k__BackingField: Test1Line
+  <Groups>k__BackingField: []
+  <Nodes>k__BackingField:
+  - <ID>k__BackingField: 8cb786b6-f20c-4e67-b96f-eac1e13564fc
+    <Name>k__BackingField: PChan
+    <Text>k__BackingField: Hello
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: e17e627c-718b-4cd2-8af4-9ccc5985f23c
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 37, y: 169}
+  - <ID>k__BackingField: e17e627c-718b-4cd2-8af4-9ccc5985f23c
+    <Name>k__BackingField: MChan
+    <Text>k__BackingField: 'Can i help you '
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Yes
+      <NodeID>k__BackingField: 6406c879-3937-4a33-a7de-c230c60d28b3
+    - <Text>k__BackingField: No
+      <NodeID>k__BackingField: 8a8ec4db-6da6-4949-86e8-077917cb6ec7
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 385, y: 164}
+  - <ID>k__BackingField: 6406c879-3937-4a33-a7de-c230c60d28b3
+    <Name>k__BackingField: PChan1
+    <Text>k__BackingField: NONOONONONO
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 750, y: -45}
+  - <ID>k__BackingField: 8a8ec4db-6da6-4949-86e8-077917cb6ec7
+    <Name>k__BackingField: PChan2
+    <Text>k__BackingField: YESYESEYSEYSYESY
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 792, y: 280}
+  <OldGroupNames>k__BackingField: []
+  <OldUngroupedNodeNames>k__BackingField:
+  - PChan
+  - MChan
+  - PChan1
+  - PChan2
+  <OldGroupedNodeNames>k__BackingField:
+    list: []
