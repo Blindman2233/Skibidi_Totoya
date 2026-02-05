@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEditor;
 using UnityEngine.UIElements;
 
@@ -19,7 +20,32 @@ namespace DS.Utilities
         {
             foreach (string styleSheetName in styleSheetNames)
             {
+                // Try load via old "Editor Default Resources" mechanism
                 StyleSheet styleSheet = (StyleSheet) EditorGUIUtility.Load(styleSheetName);
+
+                // Fallback for newer Unity versions: try load by asset path
+                if (styleSheet == null)
+                {
+                    string fileName = Path.GetFileName(styleSheetName); // e.g. DSGraphViewStyles.uss
+                    string[] guids = AssetDatabase.FindAssets($"{Path.GetFileNameWithoutExtension(fileName)} t:StyleSheet");
+
+                    foreach (string guid in guids)
+                    {
+                        string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+
+                        if (assetPath.EndsWith(fileName))
+                        {
+                            styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(assetPath);
+                            break;
+                        }
+                    }
+                }
+
+                if (styleSheet == null)
+                {
+                    UnityEngine.Debug.LogWarning($"[DSStyleUtility] StyleSheet not found: {styleSheetName}");
+                    continue;
+                }
 
                 element.styleSheets.Add(styleSheet);
             }
