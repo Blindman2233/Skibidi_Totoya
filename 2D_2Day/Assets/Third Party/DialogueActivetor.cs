@@ -5,9 +5,11 @@ public class DialogueActivetor : MonoBehaviour
 {
     public List<DialogueLineData> dialogueLines = new List<DialogueLineData>();
 
-    // เมื่อเกิด Event (เช่นเดินไปชน หรือกดคุย) ให้ส่งข้อมูลไปที่ CutsceneSystem
+    // ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิด Event (๏ฟฝ๏ฟฝ๏ฟฝินไปช๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝอก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ) ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ่งข๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝไปท๏ฟฝ๏ฟฝ CutsceneSystem
     public void ActivateDialogue()
     {
         CutsceneSystem.Instance.StartCutscene(dialogueLines);
     }
+    //Test Cursor Help Code in this line
+    //Test Windsurf AI
 }

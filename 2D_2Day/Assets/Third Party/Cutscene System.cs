@@ -29,7 +29,18 @@ public class CutsceneSystem : MonoBehaviour
     private bool isTyping = false;
     private Coroutine typingCoroutine;
 
-    private void Awake() => Instance = this;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void StartCutscene(List<DialogueLineData> lines)
     {
