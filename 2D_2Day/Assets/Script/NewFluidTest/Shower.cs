@@ -7,6 +7,9 @@ public class Shower : MonoBehaviour
     public GameObject Base_Particle;
     public GameObject winUI;
 
+    [Tooltip("ใส่ GlassShake ของ TheGlass ถ้าอยากให้หยุดสั่นทันทีเมื่อ Shower หยุดทำงาน")]
+    public GlassShake glassShake;
+
     [Header("Point Settings")]
     public int pointsPerDrop = 1; // Points gained for each water particle spawned
 
@@ -47,6 +50,9 @@ public class Shower : MonoBehaviour
 
         if (!isFinishedSpawning)
         {
+            // ขณะกำลังปล่อยน้ำอยู่ ให้แก้วมีสิทธิ์สั่นแบบสุ่มเป็นช่วง ๆ
+            if (glassShake != null) glassShake.SetShaking(true);
+
             currentActiveTime += Time.deltaTime;
             if (currentActiveTime >= spawnDuration) isFinishedSpawning = true;
             else PerformSpawning();
@@ -54,6 +60,9 @@ public class Shower : MonoBehaviour
 
         if (isFinishedSpawning && !levelComplete)
         {
+            // พอหยุดปล่อยน้ำแล้ว ให้หยุดสั่นได้เลย
+            if (glassShake != null) glassShake.SetShaking(false);
+
             deactivateDelay -= Time.deltaTime;
             if (deactivateDelay <= 0) TriggerEndEvents();
         }
@@ -95,6 +104,7 @@ public class Shower : MonoBehaviour
     void TriggerEndEvents()
     {
         levelComplete = true;
+        if (glassShake != null) glassShake.SetShaking(false);
         if (objectsToDeactivate != null) foreach (GameObject obj in objectsToDeactivate) if (obj != null) obj.SetActive(false);
         if (objectsToActivate != null) foreach (GameObject obj in objectsToActivate) if (obj != null) obj.SetActive(true);
         if (winUI != null) winUI.SetActive(true);

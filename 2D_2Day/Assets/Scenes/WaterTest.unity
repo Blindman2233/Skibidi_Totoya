@@ -1519,7 +1519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfdd36097e2cd9e4aa31a1a6128c77bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PointDetector
-  scoreChange: 1
 --- !u!1 &234975072
 GameObject:
   m_ObjectHideFlags: 0
@@ -4305,7 +4304,7 @@ Transform:
   m_GameObject: {fileID: 528769273}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.28, y: -6.28, z: -9.23}
+  m_LocalPosition: {x: 21.93, y: -6.28, z: -9.23}
   m_LocalScale: {x: 17.226599, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4648,7 +4647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfdd36097e2cd9e4aa31a1a6128c77bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PointDetector
-  scoreChange: 1
 --- !u!1 &587504776
 GameObject:
   m_ObjectHideFlags: 0
@@ -4951,7 +4949,6 @@ GameObject:
   m_Component:
   - component: {fileID: 626678422}
   - component: {fileID: 626678424}
-  - component: {fileID: 626678425}
   m_Layer: 0
   m_Name: GlassHandle
   m_TagString: Glass
@@ -5021,19 +5018,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.39034522, y: 6.039609}
   m_EdgeRadius: 0
---- !u!114 &626678425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626678421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfdd36097e2cd9e4aa31a1a6128c77bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PointDetector
-  scoreChange: 1
 --- !u!1 &630252643 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4594939861965579042, guid: 9207fa4dd1837194bb92355e563d239a, type: 3}
@@ -6279,6 +6263,8 @@ MonoBehaviour:
   width: 10
   depth: 5
   waterMaterial: {fileID: 2100000, guid: 8a340d542eb034c4284b18705340a27a, type: 2}
+  surfaceColor: {r: 0.3, g: 0.7, b: 1, a: 0.9}
+  deepColor: {r: 0, g: 0.15, b: 0.35, a: 1}
 --- !u!212 &958705891
 SpriteRenderer:
   serializedVersion: 2
@@ -6607,13 +6593,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018826623}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.21, y: -0.16, z: 0.03}
-  m_LocalScale: {x: 65.8354, y: 20.950869, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -21.635319, y: 7.347396, z: -9.467637}
+  m_LocalScale: {x: 71.02169, y: 22.601307, z: 1.0787766}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 234975073}
-  m_Father: {fileID: 1413581104}
+  m_Father: {fileID: 1694234080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1018826625
 SpriteRenderer:
@@ -6665,7 +6651,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.83137256}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -8200,7 +8186,7 @@ Transform:
   m_GameObject: {fileID: 1347470547}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.75, y: -1.6800003, z: -3.38}
+  m_LocalPosition: {x: -21.89, y: -1.6800003, z: -3.38}
   m_LocalScale: {x: 10.79724, y: 1.4063112, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8264,7 +8250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfdd36097e2cd9e4aa31a1a6128c77bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PointDetector
-  scoreChange: -1
 --- !u!1 &1363603209
 GameObject:
   m_ObjectHideFlags: 0
@@ -9070,6 +9055,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1413581104}
+  - component: {fileID: 1413581105}
   m_Layer: 0
   m_Name: TheGlass
   m_TagString: Glass
@@ -9094,9 +9080,24 @@ Transform:
   - {fileID: 585960431}
   - {fileID: 166765708}
   - {fileID: 425157788}
-  - {fileID: 1018826624}
   m_Father: {fileID: 1694234080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1413581105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413581103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac5c013c253be4418ead91c5504e279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlassShake
+  maxAngle: 20
+  positionJitter: 0.5
+  shakeSpeed: 2
+  isShaking: 1
 --- !u!1 &1416647070
 GameObject:
   m_ObjectHideFlags: 0
@@ -11590,6 +11591,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1018826624}
   - {fileID: 1413581104}
   - {fileID: 1823001855}
   - {fileID: 1377317586}
@@ -11892,13 +11894,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Simulation
   particles:
   - {fileID: 630252648}
-  Base_Particle: {fileID: 4594939861965579042, guid: 9207fa4dd1837194bb92355e563d239a, type: 3}
-  grid_size_x: 30
-  grid_size_y: 60
-  x_min: 1.8
-  x_max: 6.4
-  y_min: -1.4
-  y_max: 0.61
+  baseParticle: {fileID: 630252643}
+  gridSizeX: 60
+  gridSizeY: 30
+  xMin: 1.8
+  xMax: 6.4
+  yMin: -1.4
+  yMax: 0.61
 --- !u!1 &1709946197
 GameObject:
   m_ObjectHideFlags: 0
