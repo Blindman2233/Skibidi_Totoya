@@ -9073,8 +9073,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -20.33, y: 7.52, z: -9.5}
-  m_LocalScale: {x: 1.0787766, y: 1.0787766, z: 1.0787766}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.93, y: 0.93, z: 0.93}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 626678422}
   - {fileID: 585960431}
@@ -9094,9 +9094,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5c013c253be4418ead91c5504e279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlassShake
-  maxAngle: 20
-  positionJitter: 0.5
-  shakeSpeed: 2
+  swayAmplitude: 3
+  swaySpeed: 1
   isShaking: 1
 --- !u!1 &1416647070
 GameObject:
@@ -11577,7 +11576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1694234080
 Transform:
   m_ObjectHideFlags: 0
@@ -12867,6 +12866,7 @@ MonoBehaviour:
   Simulation: {fileID: 1705078187}
   Base_Particle: {fileID: 630252643}
   winUI: {fileID: 0}
+  glassShake: {fileID: 0}
   pointsPerDrop: 1
   objectsToDeactivate:
   - {fileID: 1694234079}
