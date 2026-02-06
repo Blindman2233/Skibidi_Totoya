@@ -17,5 +17,8 @@ MonoBehaviour:
   <Choices>k__BackingField:
   - <Text>k__BackingField: Next Dialogue
     <NextDialogue>k__BackingField: {fileID: 0}
+    <GoodnessPointsDelta>k__BackingField: 0
   <DialogueType>k__BackingField: 0
   <IsStartingDialogue>k__BackingField: 0
+  <VoiceClip>k__BackingField: {fileID: 0}
+  <CharacterArt>k__BackingField: {fileID: 4589127611344554773, guid: cdedad6ca2c8ea243a9bc6c951397e49, type: 3}

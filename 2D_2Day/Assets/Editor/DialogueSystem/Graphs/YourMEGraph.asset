@@ -21,18 +21,24 @@ MonoBehaviour:
     <Choices>k__BackingField:
     - <Text>k__BackingField: Next Dialogue
       <NodeID>k__BackingField: 37b2047e-c245-4f78-8650-ec71805af555
+      <GoodnessPointsDelta>k__BackingField: 0
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 0
-    <Position>k__BackingField: {x: 223, y: 141}
+    <Position>k__BackingField: {x: 76, y: 128}
+    <VoiceClip>k__BackingField: {fileID: 0}
+    <CharacterSprite>k__BackingField: {fileID: 7638344754522436126, guid: 11bf0cd41c3581840af8cff8738a09fc, type: 3}
   - <ID>k__BackingField: 37b2047e-c245-4f78-8650-ec71805af555
     <Name>k__BackingField: YOUfarter
     <Text>k__BackingField: FATTTTTT
     <Choices>k__BackingField:
     - <Text>k__BackingField: Next Dialogue
       <NodeID>k__BackingField: 
+      <GoodnessPointsDelta>k__BackingField: 0
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 0
-    <Position>k__BackingField: {x: 589, y: 140}
+    <Position>k__BackingField: {x: 683, y: 127}
+    <VoiceClip>k__BackingField: {fileID: 0}
+    <CharacterSprite>k__BackingField: {fileID: 4589127611344554773, guid: cdedad6ca2c8ea243a9bc6c951397e49, type: 3}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
   - YouMOm
