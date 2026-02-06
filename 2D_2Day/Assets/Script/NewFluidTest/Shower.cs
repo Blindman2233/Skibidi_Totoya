@@ -31,6 +31,9 @@ public class Shower : MonoBehaviour
     private float currentActiveTime;
     private bool isFinishedSpawning = false;
     private bool levelComplete = false;
+    private bool isActive = false;
+    private float deactivateTimer;
+    private float initialDeactivateDelay;
 
     void Start()
     {
@@ -42,29 +45,55 @@ public class Shower : MonoBehaviour
         {
             foreach (GameObject obj in objectsToActivate) if (obj != null) obj.SetActive(false);
         }
+        initialDeactivateDelay = deactivateDelay;
     }
 
     void Update()
     {
-        if (startDelay > 0) { startDelay -= Time.deltaTime; return; }
+        if (levelComplete) return;
 
-        if (!isFinishedSpawning)
+        bool keyHeld = Input.GetKey(KeyCode.Space);
+        if (keyHeld && !isFinishedSpawning)
         {
-            // ขณะกำลังปล่อยน้ำอยู่ ให้แก้วมีสิทธิ์สั่นแบบสุ่มเป็นช่วง ๆ
+            if (!isActive)
+            {
+                isActive = true;
+            }
+        }
+        else
+        {
+            isActive = false;
+        }
+
+        if (isActive && !isFinishedSpawning)
+        {
             if (glassShake != null) glassShake.SetShaking(true);
 
             currentActiveTime += Time.deltaTime;
-            if (currentActiveTime >= spawnDuration) isFinishedSpawning = true;
-            else PerformSpawning();
+            float finishThresholdTime = spawnDuration;
+            if (currentActiveTime >= finishThresholdTime)
+            {
+                isFinishedSpawning = true;
+                isActive = false;
+                deactivateTimer = initialDeactivateDelay;
+                if (glassShake != null) glassShake.SetShaking(false);
+            }
+            else
+            {
+                PerformSpawning();
+            }
+        }
+        else
+        {
+            if (!isFinishedSpawning && glassShake != null) glassShake.SetShaking(false);
         }
 
         if (isFinishedSpawning && !levelComplete)
         {
-            // พอหยุดปล่อยน้ำแล้ว ให้หยุดสั่นได้เลย
             if (glassShake != null) glassShake.SetShaking(false);
 
-            deactivateDelay -= Time.deltaTime;
-            if (deactivateDelay <= 0) TriggerEndEvents();
+            deactivateTimer -= Time.deltaTime;
+            if (deactivateTimer <= 0) TriggerEndEvents();
         }
     }
 
