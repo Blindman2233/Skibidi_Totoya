@@ -12,9 +12,17 @@ public class Dialogue : MonoBehaviour
 
     [Header("Portrait Settings")]
     public Image portraitSlot;
+    public Image rightPortraitSlot;
     public Sprite defaultPortrait;
     public Sprite correctPortrait;
     public Sprite wrongPortrait;
+    [InspectorName("Left")]
+    public Sprite[] linePortraitsLeft;
+    public Sprite[] linePortraitsRight;
+    public Sprite[] correctLinePortraitsLeft;
+    public Sprite[] correctLinePortraitsRight;
+    public Sprite[] wrongLinePortraitsLeft;
+    public Sprite[] wrongLinePortraitsRight;
 
     [Header("Choice Settings")]
     public GameObject choicePanel;
@@ -44,6 +52,10 @@ public class Dialogue : MonoBehaviour
     private bool isChoosing = false;
     private bool isShowingResult = false;
     private WaitForSeconds delay;
+    private Sprite[] _currentPortraits;
+    private Sprite _fallbackPortrait;
+    private Sprite[] _currentRightPortraits;
+    private Sprite _fallbackRightPortrait;
 
     void Start()
     {
@@ -62,6 +74,10 @@ public class Dialogue : MonoBehaviour
         ToggleGroup(deactivateBefore, false); // NEW: Turns off objects at start
         ToggleGroup(activateAfter, false);
 
+        _currentPortraits = linePortraitsLeft;
+        _fallbackPortrait = defaultPortrait;
+        _currentRightPortraits = linePortraitsRight;
+        _fallbackRightPortrait = defaultPortrait;
         StartDialogue(dialogueLines);
     }
 
@@ -102,6 +118,25 @@ public class Dialogue : MonoBehaviour
     {
         textCom.text = "";
         if (audioSource != null) audioSource.clip = dialogueSound;
+
+        if (portraitSlot != null)
+        {
+            Sprite s = null;
+            if (_currentPortraits != null && index >= 0 && index < _currentPortraits.Length)
+            {
+                s = _currentPortraits[index];
+            }
+            portraitSlot.sprite = s != null ? s : _fallbackPortrait;
+        }
+        if (rightPortraitSlot != null)
+        {
+            Sprite sr = null;
+            if (_currentRightPortraits != null && index >= 0 && index < _currentRightPortraits.Length)
+            {
+                sr = _currentRightPortraits[index];
+            }
+            rightPortraitSlot.sprite = sr != null ? sr : _fallbackRightPortrait;
+        }
 
         int charCount = 0;
         foreach (char c in dialogueLines[index])
@@ -144,11 +179,10 @@ public class Dialogue : MonoBehaviour
         isShowingResult = true;
         choicePanel.SetActive(false);
 
-        if (portraitSlot != null && correctPortrait != null)
-        {
-            portraitSlot.sprite = correctPortrait;
-        }
-
+        _currentPortraits = correctLinePortraitsLeft;
+        _fallbackPortrait = correctPortrait;
+        _currentRightPortraits = correctLinePortraitsRight;
+        _fallbackRightPortrait = correctPortrait;
         StartDialogue(correctResponse);
     }
 
@@ -157,23 +191,17 @@ public class Dialogue : MonoBehaviour
         isShowingResult = true;
         choicePanel.SetActive(false);
 
-        if (portraitSlot != null && wrongPortrait != null)
-        {
-            portraitSlot.sprite = wrongPortrait;
-        }
-
+        _currentPortraits = wrongLinePortraitsLeft;
+        _fallbackPortrait = wrongPortrait;
+        _currentRightPortraits = wrongLinePortraitsRight;
+        _fallbackRightPortrait = wrongPortrait;
         StartDialogue(wrongResponse);
     }
 
     void FinishDialogue()
     {
-        // Handle end-of-dialogue logic
-        if (isShowingResult && dialogueLines == correctResponse)
-        {
-            ToggleGroup(activateAfter, true);
-            ToggleGroup(deactivateAfter, false); // NEW: Turns off objects at end
-        }
-
+        ToggleGroup(activateAfter, true);
+        ToggleGroup(deactivateAfter, false);
         gameObject.SetActive(false);
     }
 
