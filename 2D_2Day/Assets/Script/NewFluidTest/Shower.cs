@@ -7,8 +7,7 @@ public class Shower : MonoBehaviour
     public GameObject Base_Particle;
     public GameObject winUI;
 
-    [Tooltip("ใส่ GlassShake ของ TheGlass ถ้าอยากให้หยุดสั่นทันทีเมื่อ Shower หยุดทำงาน")]
-    public GlassShake glassShake;
+    
 
     [Header("Point Settings")]
     public int pointsPerDrop = 1; // Points gained for each water particle spawned
@@ -34,6 +33,7 @@ public class Shower : MonoBehaviour
     private bool isActive = false;
     private float deactivateTimer;
     private float initialDeactivateDelay;
+    private bool prevActive = false;
 
     void Start()
     {
@@ -64,10 +64,13 @@ public class Shower : MonoBehaviour
         {
             isActive = false;
         }
+        if (prevActive && !isActive && !isFinishedSpawning)
+        {
+        }
+        prevActive = isActive;
 
         if (isActive && !isFinishedSpawning)
         {
-            if (glassShake != null) glassShake.SetShaking(true);
 
             currentActiveTime += Time.deltaTime;
             if (currentActiveTime >= spawnDuration)
@@ -80,7 +83,7 @@ public class Shower : MonoBehaviour
                 isFinishedSpawning = true;
                 isActive = false;
                 deactivateTimer = initialDeactivateDelay;
-                if (glassShake != null) glassShake.SetShaking(false);
+                
             }
             else
             {
@@ -89,13 +92,10 @@ public class Shower : MonoBehaviour
         }
         else
         {
-            if (!isFinishedSpawning && glassShake != null) glassShake.SetShaking(false);
         }
 
         if (isFinishedSpawning && !levelComplete)
         {
-            if (glassShake != null) glassShake.SetShaking(false);
-
             deactivateTimer -= Time.deltaTime;
             if (deactivateTimer <= 0) TriggerEndEvents();
         }
@@ -137,7 +137,6 @@ public class Shower : MonoBehaviour
     void TriggerEndEvents()
     {
         levelComplete = true;
-        if (glassShake != null) glassShake.SetShaking(false);
         if (objectsToDeactivate != null) foreach (GameObject obj in objectsToDeactivate) if (obj != null) obj.SetActive(false);
         if (objectsToActivate != null) foreach (GameObject obj in objectsToActivate) if (obj != null) obj.SetActive(true);
         if (winUI != null) winUI.SetActive(true);

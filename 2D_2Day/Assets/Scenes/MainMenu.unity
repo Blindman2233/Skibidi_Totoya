@@ -2788,7 +2788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfef9717f94cac74bb423ac654ae60f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StartMenuController
-  sceneToLoad: WaterTest
+  sceneToLoad: Chapter01
   optionsPanel: {fileID: 563774179}
   windowsModeToggle: {fileID: 1568639279}
 --- !u!114 &1101086876

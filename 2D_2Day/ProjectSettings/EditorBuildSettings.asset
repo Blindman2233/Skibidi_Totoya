@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 33d8cb919b0ad4e46acd31bf168a9eba
   - enabled: 1
-    path: Assets/Scenes/WaterTest.unity
+    path: Assets/Scenes/Chapter01.unity
     guid: 2433cb107b95b4348b3c25b0d172b9e8
   - enabled: 1
     path: Assets/Scenes/Player.unity

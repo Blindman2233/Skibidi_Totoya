@@ -41,6 +41,6 @@ public class MainMenuSave : MonoBehaviour
         PlayerPrefs.SetInt("IsGameLoaded", 0);
 
         // Load Level 1 (Replace with your first level name)
-        SceneManager.LoadScene("WaterTest");
+        SceneManager.LoadScene("Chapter01");
     }
 }
