@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea79d779f3260e4290485bee0896d39, type: 3}
+  m_Name: TestNPC
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
+  npcName: Frind
+  npcPortrait: {fileID: -5201723998951544761, guid: 2da1c5f9adb106447be3df4891faa175, type: 3}
+  dialogueLines:
+  - HelLo mA FriNd
+  - lS mE
+  autoProgressLines: 
+  autoProgressDelay: 2
+  typingSpeed: 0.1
+  voiceSound: {fileID: 0}
+  voicePitch: 1

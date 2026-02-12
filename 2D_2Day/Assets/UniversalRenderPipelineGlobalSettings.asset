@@ -62,9 +62,15 @@ MonoBehaviour:
       - rid: 3757905741221986395
       - rid: 3757905741221986396
       - rid: 3757905741221986397
+<<<<<<< Updated upstream
       - rid: 6620463073045250048
       - rid: 6620463073045250049
       - rid: 6620463073045250050
+=======
+      - rid: 3790429467363770368
+      - rid: 3790429467363770369
+      - rid: 3790429467363770370
+>>>>>>> Stashed changes
     m_RuntimeSettings:
       m_List:
       - rid: 3757905741221986369
@@ -406,7 +412,11 @@ MonoBehaviour:
         m_IncludeReferencedInScenes: 0
         m_IncludeAssetsByLabel: 0
         m_LabelToInclude: 
+<<<<<<< Updated upstream
     - rid: 6620463073045250048
+=======
+    - rid: 3790429467363770368
+>>>>>>> Stashed changes
       type: {class: RayTracingRenderPipelineResources, ns: UnityEngine.Rendering.UnifiedRayTracing, asm: Unity.UnifiedRayTracing.Runtime}
       data:
         m_Version: 1
@@ -419,12 +429,20 @@ MonoBehaviour:
         m_BuildHlbvh: {fileID: 7200000, guid: 2d70cd6be91bd7843a39a54b51c15b13, type: 3}
         m_RestructureBvh: {fileID: 7200000, guid: 56641cb88dcb31a4398a4997ef7a7a8c, type: 3}
         m_Scatter: {fileID: 7200000, guid: a2eaeefdac4637a44b734e85b7be9186, type: 3}
+<<<<<<< Updated upstream
     - rid: 6620463073045250049
+=======
+    - rid: 3790429467363770369
+>>>>>>> Stashed changes
       type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Version: 0
         m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+<<<<<<< Updated upstream
     - rid: 6620463073045250050
+=======
+    - rid: 3790429467363770370
+>>>>>>> Stashed changes
       type: {class: URPReflectionProbeSettings, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         version: 1
