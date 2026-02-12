@@ -150,11 +150,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
-<<<<<<< Updated upstream
       "version": "1.18.0",
-=======
-      "version": "1.17.0",
->>>>>>> Stashed changes
       "depth": 0,
       "source": "registry",
       "dependencies": {

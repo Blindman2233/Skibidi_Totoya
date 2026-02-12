@@ -57,7 +57,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // --- TRIGGER DETECTION ---
-<<<<<<< Updated upstream
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Interactable"))
@@ -65,11 +64,6 @@ public class PlayerMovement : MonoBehaviour
             currentInteractable = other.gameObject;
         }
     }
-=======
-
-    // When Player enters the object's area
-    
->>>>>>> Stashed changes
 
     private void OnTriggerExit2D(Collider2D other)
     {
