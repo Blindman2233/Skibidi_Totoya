@@ -17,8 +17,7 @@ public class DialogueManager : MonoBehaviour
     public bool isDialogueActive = false;
 
     public float typingSpeed = 0.05f;
-
-    public Animator animator;
+    public GameObject dialogueUI;
 
     private void Awake()
     {
@@ -31,8 +30,6 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(DialogueText dialogue)
     {
         isDialogueActive = true;
-
-        animator.Play("show");
 
         lines.Clear();
 
@@ -75,6 +72,14 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         isDialogueActive = false;
-        animator.Play("hide");
+        dialogueUI.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            DisplayNextDialogueLine();
+        }
     }
 }

@@ -19,6 +19,6 @@ public class ScoreManager : MonoBehaviour
 
     void UpdateUI()
     {
-        if (scoreText != null) scoreText.text = "Score: " + score;
+        if (scoreText != null) scoreText.text = "Pouring " + score + "%";
     }
 }

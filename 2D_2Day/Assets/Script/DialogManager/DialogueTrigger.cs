@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +16,7 @@ public class DialogueLine
     public DialogueCharacter character;
     [TextArea(3, 10)]
     public string line;
+    internal object customSound;
 }
 
 [System.Serializable]
@@ -25,25 +28,25 @@ public class DialogueText
 public class DialogueTrigger : MonoBehaviour
 {
     public DialogueText dialogue;
+    public GameObject DialogueUI;
 
     public void TriggerDialogue()
     {
         DialogueManager.Instance.StartDialogue(dialogue);
     }
 
-    /*private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            TriggerDialogue();
-        }
-    }*/
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            DialogueUI.SetActive(true);
+            StartCoroutine(WaitForSeconds(1f));
             TriggerDialogue();
         }
+    }
+
+    IEnumerator WaitForSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
     }
 }
