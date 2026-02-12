@@ -15333,7 +15333,7 @@ GameObject:
   - component: {fileID: 1558882487}
   - component: {fileID: 1558882488}
   m_Layer: 0
-  m_Name: Polices
+  m_Name: PoliceMen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20688,7 +20688,7 @@ GameObject:
   - component: {fileID: 2093184497}
   - component: {fileID: 2093184499}
   m_Layer: 0
-  m_Name: A man_0
+  m_Name: AChen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
