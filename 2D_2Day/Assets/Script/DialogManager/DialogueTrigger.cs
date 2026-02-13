@@ -8,6 +8,7 @@ public class DialogueCharacter
 {
     public string name;
     public Sprite icon;
+    public Sprite icon2;
 }
 
 [System.Serializable]

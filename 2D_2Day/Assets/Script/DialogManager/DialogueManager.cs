@@ -8,7 +8,8 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
-    public Image characterIcon;
+    public Image characterIconLeft;
+    public Image characterIconRight;
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI dialogueArea;
 
@@ -51,7 +52,8 @@ public class DialogueManager : MonoBehaviour
 
         DialogueLine currentLine = lines.Dequeue();
 
-        characterIcon.sprite = currentLine.character.icon;
+        characterIconLeft.sprite = currentLine.character.icon;
+        characterIconRight.sprite = currentLine.character.icon2;
         characterName.text = currentLine.character.name;
 
         StopAllCoroutines();
