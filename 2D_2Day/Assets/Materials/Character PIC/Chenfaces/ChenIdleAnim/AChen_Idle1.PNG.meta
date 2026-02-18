@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2da1c5f9adb106447be3df4891faa175
+guid: 0a92f2d7cfbd95f4d8dfd37e1ae2f465
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5201723998951544761
-    second: MAN LEFT_0
+      213: -4771147101730196467
+    second: AChen_Idle1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MAN LEFT_0
+      name: AChen_Idle1_0
       rect:
         serializedVersion: 2
-        x: 148
-        y: 67
-        width: 242
-        height: 597
+        x: 350
+        y: 117
+        width: 495
+        height: 1594
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7486ed63593cfc7b0800000000000000
-      internalID: -5201723998951544761
+      spriteID: d04bc365dfa79cdb0800000000000000
+      internalID: -4771147101730196467
       vertices: []
       indices: 
       edges: []
@@ -148,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MAN LEFT_0: -5201723998951544761
+      AChen_Idle1_0: -4771147101730196467
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

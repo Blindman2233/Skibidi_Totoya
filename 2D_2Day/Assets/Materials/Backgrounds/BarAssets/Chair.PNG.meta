@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7b1db2c964fde6d44a77e8af778a50b5
+guid: b5043433c96508b48a459654dd4147f0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2574021034853606909
-    second: Road-night_0
+      213: 5843985864524226762
+    second: Chair_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Road-night_0
+      name: Chair_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 2899
         y: 0
-        width: 1280
-        height: 360
+        width: 154
+        height: 299
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 30ada2da18d374cd0800000000000000
-      internalID: -2574021034853606909
+      spriteID: ac0ee575e220a1150800000000000000
+      internalID: 5843985864524226762
       vertices: []
       indices: 
       edges: []
@@ -148,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Road-night_0: -2574021034853606909
+      Chair_0: 5843985864524226762
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

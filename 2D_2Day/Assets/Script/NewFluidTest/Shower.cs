@@ -7,7 +7,7 @@ public class Shower : MonoBehaviour
     public GameObject Base_Particle;
     public GameObject winUI;
 
-    
+   
 
     [Header("Point Settings")]
     public int pointsPerDrop = 1; // Points gained for each water particle spawned
