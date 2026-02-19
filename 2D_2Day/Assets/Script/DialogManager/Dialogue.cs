@@ -56,6 +56,7 @@ public class Dialogue : MonoBehaviour
     private Sprite _fallbackPortrait;
     private Sprite[] _currentRightPortraits;
     private Sprite _fallbackRightPortrait;
+    public bool disableSelfAtEnd = true;
 
     void Start()
     {
@@ -202,7 +203,7 @@ public class Dialogue : MonoBehaviour
     {
         ToggleGroup(activateAfter, true);
         ToggleGroup(deactivateAfter, false);
-        gameObject.SetActive(false);
+        if (disableSelfAtEnd) gameObject.SetActive(false);
     }
 
     // This helper function handles the arrays to prevent errors
