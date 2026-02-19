@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,13 +14,14 @@ public class NewWater : MonoBehaviour
     public float widthChangeSpeed = 6f;
     public float enableThreshold = 0.9f;
     public float disableThreshold = 0.05f;
+    public BeerGlass targetGlass;
+    public bool autoDetectGlass = true;
+    public float glassDetectRadius = 2f;
 
     private float lastLength;
     private bool isEmitting;
     private bool desiredEmitting;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         lineRenderer.positionCount = 2;
@@ -31,9 +32,26 @@ public class NewWater : MonoBehaviour
         lineRenderer.widthMultiplier = desiredEmitting ? maxWidth : 0f;
         isEmitting = desiredEmitting && lineRenderer.widthMultiplier >= enableThreshold * maxWidth;
         boxCollider2D.enabled = isEmitting;
+        if (autoDetectGlass && targetGlass == null)
+        {
+            BeerGlass nearest = null;
+            float best = float.PositiveInfinity;
+            var all = UnityEngine.Object.FindObjectsOfType<BeerGlass>();
+            foreach (var g in all)
+            {
+                if (g == null || g.beerSpriteTransform == null) continue;
+                var p = g.beerSpriteTransform.position;
+                float d = Mathf.Abs(p.x - transform.position.x) + Mathf.Max(0f, transform.position.y - p.y);
+                if (d < best && Vector2.Distance(transform.position, p) <= glassDetectRadius)
+                {
+                    best = d;
+                    nearest = g;
+                }
+            }
+            if (nearest != null) targetGlass = nearest;
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -73,9 +91,46 @@ public class NewWater : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, maxLength, obstacleLayerMask);
         if (hit)
+        {
             currentMaxLength = Vector3.Distance(transform.position, hit.point);
+
+            if (isEmitting)
+            {
+                // 1. ลองหาสคริปต์จากตัวที่ถูกชนตรงๆ ก่อน
+                BeerGlass glass = hit.collider.GetComponent<BeerGlass>();
+
+                // 2. ถ้าไม่เจอ (เช่น ชนผิวน้ำเบียร์ แต่สคริปต์อยู่ก้นแก้ว) ให้หาจากวัตถุข้างเคียงใน Parent เดียวกัน
+                if (glass == null && hit.collider.transform.parent != null)
+                {
+                    glass = hit.collider.transform.parent.GetComponentInChildren<BeerGlass>();
+                }
+
+                if (glass != null)
+                {
+                    glass.ReceiveWater(Time.deltaTime);
+                }
+            }
+        }
         else
+        {
             currentMaxLength = maxLength;
+        }
+
+        if (targetGlass != null && targetGlass.beerSpriteTransform != null)
+        {
+            var sr = targetGlass.beerSpriteTransform.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                var b = sr.bounds;
+                float x0 = lineRenderer.GetPosition(0).x;
+                if (x0 >= b.min.x && x0 <= b.max.x)
+                {
+                    float glassTopY = b.max.y;
+                    float toTop = Mathf.Max(0f, transform.position.y - glassTopY);
+                    currentMaxLength = Mathf.Min(currentMaxLength, toTop);
+                }
+            }
+        }
     }
 
     private void CalculateActualLength(float currentMaxLength, out float currentLength)
