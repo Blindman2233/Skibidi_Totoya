@@ -132,6 +132,23 @@ public class Shower : MonoBehaviour
             pScript.vel = init_speed;
         }
         new_particle.transform.parent = Simulation.transform;
+
+        var rb2d = new_particle.GetComponent<Rigidbody2D>();
+        if (rb2d == null)
+        {
+            rb2d = new_particle.AddComponent<Rigidbody2D>();
+            rb2d.bodyType = RigidbodyType2D.Kinematic;
+            rb2d.simulated = true;
+            rb2d.useFullKinematicContacts = true;
+            rb2d.gravityScale = 0f;
+        }
+        var col2d = new_particle.GetComponent<CircleCollider2D>();
+        if (col2d == null)
+        {
+            col2d = new_particle.AddComponent<CircleCollider2D>();
+            col2d.isTrigger = true;
+            col2d.radius = 0.05f;
+        }
     }
 
     void TriggerEndEvents()

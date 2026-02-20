@@ -8,6 +8,7 @@ TagManager:
   - Water
   - Glass
   - FailZone
+  - LiquidParticle
   layers:
   - Default
   - TransparentFX

@@ -128,6 +128,38 @@ public class Particle : MonoBehaviour
         press_near = K_NEAR * rho_near;
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (IsBottom(other))
+        {
+            var glass = other.GetComponentInParent<BeerGlass>();
+            if (glass == null && other.transform.parent != null)
+            {
+                glass = other.transform.parent.GetComponentInChildren<BeerGlass>();
+            }
+            if (glass != null)
+            {
+                glass.ReceiveWater(Time.deltaTime);
+            }
+            if (name != "Base_Particle")
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    bool IsBottom(Collider2D other)
+    {
+        var n = other.gameObject.name;
+        if (!string.IsNullOrEmpty(n))
+        {
+            var nl = n.ToLowerInvariant();
+            if (nl == "bottom" || nl.Contains("bottom")) return true;
+        }
+        if (other.tag == "Bottom") return true;
+        return false;
+    }
+
     void OnCollisionStay2D(Collision2D collision)
     {
         // Calculate the normal vector of the collision
