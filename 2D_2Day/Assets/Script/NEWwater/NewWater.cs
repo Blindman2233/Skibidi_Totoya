@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿using System.Collections;
+﻿﻿﻿﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,28 +17,25 @@ public class NewWater : MonoBehaviour
     public BeerGlass targetGlass;
     public bool autoDetectGlass = true;
     public float glassDetectRadius = 2f;
-    public bool startOn = false;
+    public bool autoSortBehindBeer = true;
+    public int sortBehindOffset = -10;
+    public string streamSortingLayerName = "Default";
+    public int streamSortingOrder = 0;
 
-    public bool requireFirstPress = true;
     private float lastLength;
     private bool isEmitting;
     private bool desiredEmitting;
 
-    private bool hasPressedFirst;
     void Start()
     {
-        desiredEmitting = startOn;
-        desiredEmitting = false;
-        hasPressedFirst = !requireFirstPress && startOn;
         lineRenderer.positionCount = 2;
         for (int i = 0; i < 2; i++)
         {
             lineRenderer.SetPosition(i, transform.position);
         }
-        lineRenderer.widthMultiplier = 0f;
-        isEmitting = false;
-        boxCollider2D.enabled = false;
-        if (splashEffectObject != null) splashEffectObject.SetActive(false);
+        lineRenderer.widthMultiplier = desiredEmitting ? maxWidth : 0f;
+        isEmitting = desiredEmitting && lineRenderer.widthMultiplier >= enableThreshold * maxWidth;
+        boxCollider2D.enabled = isEmitting;
         if (autoDetectGlass && targetGlass == null)
         {
             BeerGlass nearest = null;
@@ -57,18 +54,29 @@ public class NewWater : MonoBehaviour
             }
             if (nearest != null) targetGlass = nearest;
         }
+        // Sorting: put stream behind beer
+        if (autoSortBehindBeer && targetGlass != null && targetGlass.beerSpriteTransform != null)
+        {
+            var sr = targetGlass.beerSpriteTransform.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                lineRenderer.sortingLayerID = sr.sortingLayerID;
+                lineRenderer.sortingOrder = sr.sortingOrder + sortBehindOffset;
+            }
+        }
+        else
+        {
+            // manual fallback
+            lineRenderer.sortingLayerName = streamSortingLayerName;
+            lineRenderer.sortingOrder = streamSortingOrder;
+        }
     }
 
     void Update()
     {
-        if (requireFirstPress && !hasPressedFirst)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Input.GetKeyDown(KeyCode.Space)) hasPressedFirst = true;
-            desiredEmitting = false;
-        }
-        else
-        {
-            desiredEmitting = Input.GetKey(KeyCode.Space);
+            desiredEmitting = !desiredEmitting;
         }
 
         float targetWidth = desiredEmitting ? maxWidth : 0f;
@@ -96,11 +104,6 @@ public class NewWater : MonoBehaviour
             ResizeLine(currentLength);
             RescaleCollider(currentLength);
             CheckForSplashEffect(currentLength, currentMaxLength);
-        }
-        else
-        {
-            ResizeLine(0f);
-            RescaleCollider(0f);
         }
     }
 
@@ -132,7 +135,6 @@ public class NewWater : MonoBehaviour
         {
             currentMaxLength = maxLength;
         }
-
         if (targetGlass != null && targetGlass.beerSpriteTransform != null)
         {
             var sr = targetGlass.beerSpriteTransform.GetComponent<SpriteRenderer>();
@@ -140,11 +142,15 @@ public class NewWater : MonoBehaviour
             {
                 var b = sr.bounds;
                 float x0 = lineRenderer.GetPosition(0).x;
-                if (x0 >= b.min.x && x0 <= b.max.x)
+                if (x0 < b.min.x || x0 > b.max.x)
                 {
-                    float glassTopY = b.max.y;
-                    float toTop = Mathf.Max(0f, transform.position.y - glassTopY);
-                    currentMaxLength = Mathf.Min(currentMaxLength, toTop);
+                    currentMaxLength = 0f;
+                }
+                else
+                {
+                    float glassBottomY = b.min.y;
+                    float toBottom = Mathf.Max(0f, transform.position.y - glassBottomY);
+                    currentMaxLength = Mathf.Min(currentMaxLength, toBottom);
                 }
             }
         }
