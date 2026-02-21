@@ -1085,7 +1085,7 @@
     "m_PerRendererData": false,
     "m_customAttributes": [],
     "m_Value": 0.30000001192092898,
-    "m_FloatType": 0,
+    "m_FloatType": 1,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
         "x": 0.0,
@@ -1627,7 +1627,7 @@
 }
 
 {
-    "m_SGVersion": 2,
+    "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
     "m_ObjectId": "47627ee7f8e39687b5f24ab1e21b4c96",
     "m_Guid": {
@@ -1652,9 +1652,9 @@
     "m_PerRendererData": false,
     "m_customAttributes": [],
     "m_Value": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
+        "r": 4.0,
+        "g": 4.0,
+        "b": 4.0,
         "a": 0.0
     },
     "isMainColor": false,
@@ -2485,10 +2485,10 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_PerRendererData": false,
+    "m_PerRendererData": true,
     "m_customAttributes": [],
-    "m_Value": 5.0,
-    "m_FloatType": 1,
+    "m_Value": 10.0,
+    "m_FloatType": 0,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
         "x": -10.0,
