@@ -55,12 +55,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FoamThickness: 5
+    - _FoamThickness: 10.8
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Thickness: 0.5
+    - _Thickness: 0.92
     m_Colors:
-    - _Color: {r: 0, g: 0.4120212, b: 1, a: 1}
-    - _FoamColor: {r: 1, g: 0, b: 0, a: 1}
+    - _Color: {r: 0.5245282, g: 0.5245282, b: 0.5245282, a: 1}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

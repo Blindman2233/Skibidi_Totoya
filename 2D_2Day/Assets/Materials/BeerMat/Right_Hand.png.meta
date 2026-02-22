@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7d0569c12fa702742a2ae06c93f54c0e
+guid: 7029b25425fefc242b3770f658c7e1ff
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2059048225914490237
-    second: Circle_4_0
+      213: 9061796168305471738
+    second: Right_Hand_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,40 +96,27 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Circle_4_0
+      name: Right_Hand_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.50340825, y: 0.511929}
+        x: 162
+        y: 374
+        width: 3328
+        height: 1756
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 382f7fe3c8acc63e0800000000000000
-      internalID: -2059048225914490237
+      spriteID: af0f7d68a97f1cd70800000000000000
+      internalID: 9061796168305471738
       vertices: []
       indices: 
       edges: []
@@ -138,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 85d83370efb5f9e4e8eaba2180d1da85
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Circle_4_0: -2059048225914490237
+      Right_Hand_0: 9061796168305471738
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -68,12 +68,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _FoamThickness: 10
+    - _FoamThickness: 100
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Thickness: 0.6
+    - _Thickness: 0.33
     m_Colors:
-    - _Color: {r: 0, g: 0.73006177, b: 1, a: 1}
+    - _Color: {r: 0.4113207, g: 0.41132066, b: 0.10166605, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
