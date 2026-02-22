@@ -40,14 +40,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // --- 4. Interaction Input ---
-        if (Input.GetKeyDown(KeyCode.E) && currentInteractable != null)
+        /*if (Input.GetKeyDown(KeyCode.E) && currentInteractable != null)
         {
             InteractableItem itemScript = currentInteractable.GetComponent<InteractableItem>();
             if (itemScript != null)
             {
                 itemScript.Interact();
             }
-        }
+        }*/
     }
 
     void FixedUpdate()
