@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 
@@ -160,3 +161,4 @@ public class ChoiceUIFixer : MonoBehaviour
         Debug.Log("=== Test Complete ===");
     }
 }
+#endif

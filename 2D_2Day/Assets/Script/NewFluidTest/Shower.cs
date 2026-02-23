@@ -6,6 +6,7 @@ public class Shower : MonoBehaviour
     public GameObject Simulation;
     public GameObject Base_Particle;
     public GameObject winUI;
+    public PlayerMovement playerMovement;
 
    
 
@@ -58,11 +59,22 @@ public class Shower : MonoBehaviour
             if (!isActive)
             {
                 isActive = true;
+                if (playerMovement != null)
+                {
+                    playerMovement.enabled = false;
+                }
             }
         }
         else
         {
-            isActive = false;
+            if (isActive)
+            {
+                isActive = false;
+                if (playerMovement != null)
+                {
+                    playerMovement.enabled = true;
+                }
+            }
         }
         if (prevActive && !isActive && !isFinishedSpawning)
         {
