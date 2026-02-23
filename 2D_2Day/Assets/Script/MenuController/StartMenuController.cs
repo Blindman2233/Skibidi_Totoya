@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class StartMenuController : MonoBehaviour
 {
     [Header("Scene Settings")]
-    [Tooltip("Type the exact name of the scene you want to load")]
+    [Tooltip("Type the exact name of the scene you want to load (e.g., 'CutSceneCH1')")]
     public string sceneToLoad;
     
     [Header("Options Panel")]
@@ -39,11 +39,12 @@ public class StartMenuController : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
+            Debug.Log($"Attempting to load scene: '{sceneToLoad}'");
             SceneManager.LoadScene(sceneToLoad);
         }
         else
         {
-            Debug.LogError("No scene name provided in the Inspector!");
+            Debug.LogError("No scene name provided in the Inspector! Please type the name of your Cutscene scene.");
         }
     }
 

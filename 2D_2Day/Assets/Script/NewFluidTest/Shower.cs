@@ -6,6 +6,7 @@ public class Shower : MonoBehaviour
     public GameObject Simulation;
     public GameObject Base_Particle;
     public GameObject winUI;
+    public GameObject pourBeerUI;
     public PlayerMovement playerMovement;
 
    
@@ -53,16 +54,14 @@ public class Shower : MonoBehaviour
     {
         if (levelComplete) return;
 
+        bool isUIActive = pourBeerUI != null && pourBeerUI.activeSelf;
         bool keyHeld = Input.GetKey(KeyCode.Space);
-        if (keyHeld && !isFinishedSpawning)
+
+        if (keyHeld && !isFinishedSpawning && !isUIActive)
         {
             if (!isActive)
             {
                 isActive = true;
-                if (playerMovement != null)
-                {
-                    playerMovement.enabled = false;
-                }
             }
         }
         else
@@ -70,11 +69,12 @@ public class Shower : MonoBehaviour
             if (isActive)
             {
                 isActive = false;
-                if (playerMovement != null)
-                {
-                    playerMovement.enabled = true;
-                }
             }
+        }
+
+        if (playerMovement != null)
+        {
+            playerMovement.enabled = !isActive && !isUIActive;
         }
         if (prevActive && !isActive && !isFinishedSpawning)
         {
