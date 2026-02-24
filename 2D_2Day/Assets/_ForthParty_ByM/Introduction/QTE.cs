@@ -7,6 +7,9 @@ public class QTE : MonoBehaviour
     public RectTransform safeZone; // Reference to the safe zone RectTransform
     public float moveSpeed = 100f; // Speed of the pointer movement
 
+    public GameObject LoseUI;
+    public GameObject QTEUI;
+
     private float direction = 1f; // 1 for moving towards B, -1 for moving towards A
     private RectTransform pointerTransform;
     private Vector3 targetPosition;
@@ -30,8 +33,11 @@ public class QTE : MonoBehaviour
         }
         else if (Vector3.Distance(pointerTransform.position, pointB.position) < 0.1f)
         {
-            targetPosition = pointA.position;
-            direction = -1f;
+            //targetPosition = pointA.position;
+            //direction = -1f;
+
+            QTEUI.SetActive(false);
+            LoseUI.SetActive(true);
         }
 
         // Check for input
@@ -47,10 +53,13 @@ public class QTE : MonoBehaviour
         if (RectTransformUtility.RectangleContainsScreenPoint(safeZone, pointerTransform.position, null))
         {
             Debug.Log("Success!");
+            QTEUI.SetActive(false);
         }
         else
         {
             Debug.Log("Fail!");
+            QTEUI.SetActive(false);
+            LoseUI.SetActive(true);
         }
     }
 }

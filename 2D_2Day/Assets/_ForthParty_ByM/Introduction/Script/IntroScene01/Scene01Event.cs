@@ -5,7 +5,6 @@ public class Scene01Event : MonoBehaviour
 {
     [SerializeField] GameObject fadeScreenIn;
 
-    
     void Start()
     {
         StartCoroutine(EventStarter());
