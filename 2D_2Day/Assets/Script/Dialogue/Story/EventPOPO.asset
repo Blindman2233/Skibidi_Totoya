@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d87c20e5c8c57645b96138a855c8565, type: 3}
-  m_Name: Event01
+  m_Name: EventPOPO
   m_EditorClassIdentifier: Assembly-CSharp::EventData
-  eventName: Event01
+  eventName: DialogueCop
   eventDescription: 
   requiredConditions: []
   actionsOnComplete: []
-  dialogueData: {fileID: 11400000, guid: c0d2a4d61a77ff843a679372546b53f2, type: 2}
+  dialogueData: {fileID: 11400000, guid: a9e25e25db54e9141b625081d149c4f4, type: 2}
   isRepeatable: 0
-  nextEvents:
-  - {fileID: 11400000, guid: 4b503a7310c69264c945522b560524a2, type: 2}
+  nextEvents: []

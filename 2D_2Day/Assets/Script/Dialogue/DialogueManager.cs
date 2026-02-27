@@ -13,6 +13,10 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI dialogueArea;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    private DialoguesObject currentDialogue;
+
     [Header("Choice UI")]
     public GameObject choicePanel;
     public GameObject choiceButtonPrefab;
@@ -36,12 +40,36 @@ public class DialogueManager : MonoBehaviour
             Instance = this;
 
         lines = new Queue<DialogueLine>();
+
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                // Try to add one if missing
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+        }
     }
 
     public void StartDialogue(DialoguesObject dialogueObject)
     {
+        currentDialogue = dialogueObject;
         isDialogueActive = true;
         isWaitingForChoice = false;
+
+        // --- Handle Initial Activations/Deactivations ---
+        ToggleObjects(currentDialogue.activateBefore, true);
+        ToggleObjects(currentDialogue.deactivateBefore, false);
+        // ------------------------------------------------
+
+        // Check if we have a valid sound, either in DialogueData or already on the AudioSource
+        bool hasSound = (currentDialogue.dialogueSound != null) || (audioSource != null && audioSource.clip != null);
+        
+        if (!hasSound)
+        {
+            Debug.LogWarning($"[DialogueManager] No audio clip assigned in Dialogue Data: {dialogueObject.name} AND no default clip on AudioSource. Please assign a sound.");
+        }
 
         lines.Clear();
 
@@ -63,6 +91,8 @@ public class DialogueManager : MonoBehaviour
             StopCoroutine(typingCoroutine);
             dialogueArea.text = currentLine.line;
             isTyping = false;
+            
+            if (audioSource != null) audioSource.Stop();
             
             if (currentLine.hasChoices)
             {
@@ -123,9 +153,29 @@ public class DialogueManager : MonoBehaviour
 
         dialogueArea.text = "";
 
+        int charCount = 0;
         foreach (char letter in dialogueLine.line.ToCharArray())
         {
             dialogueArea.text += letter;
+            charCount++;
+
+            if (audioSource != null && currentDialogue != null)
+            {
+                // Determine which clip to play: DialogueData specific sound OR fallback to AudioSource's default clip
+                AudioClip clipToPlay = currentDialogue.dialogueSound != null ? currentDialogue.dialogueSound : audioSource.clip;
+                
+                if (clipToPlay != null)
+                {
+                    int frequency = Mathf.Max(1, currentDialogue.soundFrequency);
+                    if (letter != ' ' && charCount % frequency == 0)
+                    {
+                        audioSource.pitch = Random.Range(currentDialogue.minPitch, currentDialogue.maxPitch);
+                        audioSource.clip = clipToPlay; // Ensure the correct clip is assigned
+                        audioSource.Play();
+                    }
+                }
+            }
+
             yield return new WaitForSeconds(typingSpeed);
         }
 
@@ -240,12 +290,70 @@ public class DialogueManager : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
+
+        // --- Handle Final Activations/Deactivations ---
+        if (currentDialogue != null)
+        {
+            ToggleObjects(currentDialogue.activateAfter, true);
+            ToggleObjects(currentDialogue.deactivateAfter, false);
+        }
+        // ---------------------------------------------
+    }
+
+    private void ToggleObjects(string[] objectNames, bool state)
+    {
+        if (objectNames == null) return;
+        
+        foreach (string name in objectNames)
+        {
+            if (string.IsNullOrEmpty(name)) continue;
+
+            GameObject obj = FindObjectByName(name);
+            if (obj != null)
+            {
+                obj.SetActive(state);
+            }
+            else
+            {
+                Debug.LogWarning($"[DialogueManager] Could not find object named '{name}' to set active: {state}");
+            }
+        }
+    }
+
+    // Helper to find objects even if they are inactive
+    private GameObject FindObjectByName(string name)
+    {
+        // 1. Try standard Find first (fastest, but only works for active objects)
+        GameObject obj = GameObject.Find(name);
+        if (obj != null) return obj;
+
+        // 2. If not found, we need to search through all objects including inactive ones
+        // Note: This can be slow, so use sparingly
+        foreach (GameObject root in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+        {
+            obj = FindInHierarchy(root.transform, name);
+            if (obj != null) return obj;
+        }
+        
+        return null;
+    }
+
+    private GameObject FindInHierarchy(Transform parent, string name)
+    {
+        if (parent.name == name) return parent.gameObject;
+        
+        foreach (Transform child in parent)
+        {
+            GameObject result = FindInHierarchy(child, name);
+            if (result != null) return result;
+        }
+        return null;
     }
 
     private void Update()
     {
-        // Only allow space to advance if not waiting for choice and not typing
-        if (Input.GetKeyDown(KeyCode.Space) && !isWaitingForChoice && !isTyping)
+        // Allow space to advance or skip typing if not waiting for choice
+        if (Input.GetKeyDown(KeyCode.Space) && !isWaitingForChoice)
         {
             DisplayNextDialogueLine();
         }

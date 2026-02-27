@@ -1705,8 +1705,8 @@
     "m_PerRendererData": false,
     "m_customAttributes": [],
     "m_Value": {
-        "r": 0.0,
-        "g": 0.4120211601257324,
+        "r": 1.0,
+        "g": 1.0,
         "b": 1.0,
         "a": 1.0
     },

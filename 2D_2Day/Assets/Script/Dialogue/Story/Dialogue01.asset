@@ -12,6 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Dialogue01
   m_EditorClassIdentifier: Assembly-CSharp::DialoguesObject
+  dialogueSound: {fileID: 8300000, guid: 9462446c7e8e8dc43a29fcb91984e330, type: 3}
+  minPitch: 0.812
+  maxPitch: 1.123
+  soundFrequency: 3
+  activateBefore: []
+  activateAfter:
+  - LuoFeng
+  deactivateBefore: []
+  deactivateAfter: []
   lines:
   - side: 0
     character:
@@ -20,7 +29,7 @@ MonoBehaviour:
       icon2: {fileID: 8707792856259278305, guid: 167cec2c9ba3e454b972a4fae1c7f189, type: 3}
     line: "\u0E19\u0E35\u0E48\u2026\u0E1E\u0E35\u0E48\u0E0A\u0E32\u0E22\u2026\u0E02\u0E2D\u0E22\u0E37\u0E21\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E2A\u0E31\u0E01\u0E1E\u0E31\u0E01\u0E40\u0E16\u0E2D\u0E30\u0E19\u0E30
       \u0E2B\u0E19\u0E35\u0E49\u0E43\u0E19\u0E04\u0E23\u0E31\u0E49\u0E07\u0E19\u0E35\u0E49\u0E2A\u0E31\u0E01\u0E27\u0E31\u0E19\u0E08\u0E30\u0E15\u0E2D\u0E1A\u0E41\u0E17\u0E19\u0E04\u0E37\u0E19\u0E41\u0E19\u0E48\u0E19\u0E2D\u0E19"
-    hasChoices: 1
+    hasChoices: 0
     choices:
     - choiceText: "\u0E0A\u0E48\u0E27\u0E22"
       consequences: []

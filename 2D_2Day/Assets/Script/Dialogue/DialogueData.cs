@@ -104,5 +104,23 @@ public class DialogueText
 [CreateAssetMenu(fileName = "DialoguesObj", menuName = "Dialogue System/Dialogue")]
 public class DialoguesObject : ScriptableObject
 {
+    [Header("Audio Settings")]
+    public AudioClip dialogueSound;
+    [Range(0.5f, 1.5f)] public float minPitch = 0.9f;
+    [Range(0.5f, 1.5f)] public float maxPitch = 1.1f;
+    public int soundFrequency = 1;
+
+    [Header("Activation Settings (Object Names)")]
+    [Tooltip("Names of objects to ACTIVATE when dialogue STARTS")]
+    public string[] activateBefore;
+    [Tooltip("Names of objects to ACTIVATE when dialogue ENDS")]
+    public string[] activateAfter;
+
+    [Header("Deactivation Settings (Object Names)")]
+    [Tooltip("Names of objects to DEACTIVATE when dialogue STARTS")]
+    public string[] deactivateBefore;
+    [Tooltip("Names of objects to DEACTIVATE when dialogue ENDS")]
+    public string[] deactivateAfter;
+
     public List<DialogueLine> lines = new List<DialogueLine>();
 }
