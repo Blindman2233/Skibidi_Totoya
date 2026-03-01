@@ -1,12 +1,29 @@
 using UnityEngine;
 using UnityEngine.SceneManagement; // Needed for Menu/Quit
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     [Header("UI Reference")]
     public GameObject pauseMenuUI; // Drag your Panel object here
+    public Slider volumeSlider;
+    public Text volumeText; // Optional: Drag a Text element here to show %
 
     public static bool GameIsPaused = false; // Tracks if game is paused
+
+    void Start()
+    {
+        // Initialize Volume Slider
+        if (volumeSlider != null)
+        {
+            float savedVolume = PlayerPrefs.GetFloat("masterVolume", 1f);
+            volumeSlider.value = savedVolume;
+            AudioListener.volume = savedVolume;
+            UpdateVolumeText(savedVolume);
+
+            volumeSlider.onValueChanged.AddListener(SetVolume);
+        }
+    }
 
     void Update()
     {
@@ -52,5 +69,21 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Quitting Game...");
         Application.Quit();
+    }
+
+    public void SetVolume(float volume)
+    {
+        AudioListener.volume = volume;
+        PlayerPrefs.SetFloat("masterVolume", volume);
+        PlayerPrefs.Save();
+        UpdateVolumeText(volume);
+    }
+
+    private void UpdateVolumeText(float volume)
+    {
+        if (volumeText != null)
+        {
+            volumeText.text = Mathf.RoundToInt(volume * 100f) + "%";
+        }
     }
 }

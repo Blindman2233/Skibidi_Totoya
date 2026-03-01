@@ -5,6 +5,18 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
 
+    [Header("Audio Settings")]
+    public AudioSource audioSource;
+    public AudioClip[] footstepClips;
+    [Tooltip("Time between footsteps in seconds")]
+    public float footstepInterval = 0.5f;
+    [Tooltip("Minimum pitch for randomization")]
+    public float minPitch = 0.9f;
+    [Tooltip("Maximum pitch for randomization")]
+    public float maxPitch = 1.1f;
+
+    private float footstepTimer;
+
     private Rigidbody2D rb;
     private float moveInput;
     private Animator animator;
@@ -16,12 +28,33 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
     }
 
     void Update()
     {
         // --- 1. Movement Input ---
         moveInput = Input.GetAxisRaw("Horizontal");
+
+        // --- Audio Logic ---
+        // Only play if trying to move AND actually moving (prevents sound when pushing walls)
+        if (Mathf.Abs(moveInput) > 0.1f && Mathf.Abs(rb.linearVelocity.x) > 0.1f)
+        {
+            footstepTimer -= Time.deltaTime;
+            if (footstepTimer <= 0)
+            {
+                PlayFootstep();
+                footstepTimer = footstepInterval;
+            }
+        }
+        else
+        {
+            footstepTimer = 0;
+        }
 
         // --- 2. Animation Logic ---
         // Send positive speed to the Animator (0 = Idle, >0 = Run)
@@ -70,6 +103,15 @@ public class PlayerMovement : MonoBehaviour
         if (other.CompareTag("Interactable") && other.gameObject == currentInteractable)
         {
             currentInteractable = null;
+        }
+    }
+
+    private void PlayFootstep()
+    {
+        if (footstepClips != null && footstepClips.Length > 0 && audioSource != null)
+        {
+            audioSource.pitch = Random.Range(minPitch, maxPitch);
+            audioSource.PlayOneShot(footstepClips[Random.Range(0, footstepClips.Length)]);
         }
     }
 }
