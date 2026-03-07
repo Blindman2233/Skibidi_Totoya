@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: DGCop AfterDrinks
+  m_EditorClassIdentifier: Assembly-CSharp::DialoguesObject
+  dialogueSound: {fileID: 8300000, guid: 9462446c7e8e8dc43a29fcb91984e330, type: 3}
+  minPitch: 0.603
+  maxPitch: 0.712
+  soundFrequency: 3
+  activateBefore: []
+  activateAfter: []
+  deactivateBefore: []
+  deactivateAfter: []
+  lines:
+  - side: 0
+    character:
+      name: ...
+      icon: {fileID: 4932163390197376912, guid: 8687157a7f94c364d89fb85962b5ad82, type: 3}
+      icon2: {fileID: -117363901384088880, guid: 870783911bef34c4ab1228e99c63eace, type: 3}
+    line: ...
+    hasChoices: 1
+    choices:
+    - choiceText: "\u0E16\u0E32\u0E21"
+      consequences: []
+      nextDialogue: {fileID: 11400000, guid: 08e7cd51572ffef4ca303468ff629f9b, type: 2}
+      triggerEvent: {fileID: 11400000, guid: 13029b506f6ab5b44ab6d69c9be96965, type: 2}
+    - choiceText: "\u0E41\u0E2A\u0E14\u0E07\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2B\u0E47\u0E19"
+      consequences: []
+      nextDialogue: {fileID: 11400000, guid: cac2ce383f3c07f4397c35399b6ca195, type: 2}
+      triggerEvent: {fileID: 11400000, guid: f46141a52fbac8d4497bdbadf48bd5ad, type: 2}
