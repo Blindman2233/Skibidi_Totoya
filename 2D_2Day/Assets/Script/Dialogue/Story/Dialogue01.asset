@@ -20,7 +20,8 @@ MonoBehaviour:
   activateAfter:
   - LuoFeng
   deactivateBefore: []
-  deactivateAfter: []
+  deactivateAfter:
+  - Achen
   lines:
   - side: 0
     character:

@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d87c20e5c8c57645b96138a855c8565, type: 3}
-  m_Name: EvtPOPO afterdrinks
+  m_Name: EvtChenEscape
   m_EditorClassIdentifier: Assembly-CSharp::EventData
-  eventName: DGCop AfterDrinks
+  eventName: DGChenEscape
   eventDescription: 
   requiredConditions: []
   actionsOnComplete: []
-  dialogueData: {fileID: 11400000, guid: 395f76606b70c3d41afc31ea3db8b5a2, type: 2}
+  dialogueData: {fileID: 0}
   isRepeatable: 0
-  nextEvents:
-  - {fileID: 0}
+  nextEvents: []
