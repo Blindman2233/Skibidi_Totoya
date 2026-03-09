@@ -21,7 +21,7 @@ MonoBehaviour:
   deactivateBefore: []
   deactivateAfter: []
   lines:
-  - side: 0
+  - side: 1
     character:
       name: Mc
       icon: {fileID: -1883629792769860122, guid: e72b79ee55dd9bc488d37906a8a774e7, type: 3}
@@ -29,7 +29,7 @@ MonoBehaviour:
     line: "\u0E40\u0E01\u0E34\u0E14\u0E2D\u0E30\u0E44\u0E23\u0E02\u0E36\u0E49\u0E19\u0E04\u0E23\u0E31\u0E1A?"
     hasChoices: 0
     choices: []
-  - side: 0
+  - side: 1
     character:
       name: Rookie
       icon: {fileID: -1883629792769860122, guid: e72b79ee55dd9bc488d37906a8a774e7, type: 3}
@@ -38,7 +38,7 @@ MonoBehaviour:
       \u0E17\u0E35\u0E48\u0E2D\u0E32\u0E08\u0E08\u0E30\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E02\u0E49\u0E2D\u0E07\u0E01\u0E31\u0E1A\u0E04\u0E14\u0E35\u0E41\u0E1A\u0E07\u0E04\u0E4C"
     hasChoices: 0
     choices: []
-  - side: 0
+  - side: 1
     character:
       name: Mc
       icon: {fileID: 4162657983890906282, guid: 38e83cb4aab68c8498f5cdcbdc7f0c17, type: 3}
@@ -46,7 +46,7 @@ MonoBehaviour:
     line: '!?'
     hasChoices: 0
     choices: []
-  - side: 0
+  - side: 1
     character:
       name: LuoFeng
       icon: {fileID: 3594042269662909776, guid: 25feeeaf378f17145a7f54addd04299c, type: 3}
@@ -55,7 +55,7 @@ MonoBehaviour:
       \u0E41\u0E04\u0E48\u0E43\u0E2B\u0E49\u0E04\u0E27\u0E32\u0E21\u0E23\u0E48\u0E27\u0E21\u0E21\u0E37\u0E2D\u0E01\u0E31\u0E1A\u0E15\u0E33\u0E23\u0E27\u0E08\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E1E\u0E1A\u0E40\u0E08\u0E2D\u0E04\u0E19\u0E2B\u0E19\u0E49\u0E32\u0E2A\u0E07\u0E2A\u0E31\u0E22\u0E01\u0E47\u0E1E\u0E2D"
     hasChoices: 0
     choices: []
-  - side: 0
+  - side: 1
     character:
       name: LuoFeng
       icon: {fileID: 3594042269662909776, guid: 25feeeaf378f17145a7f54addd04299c, type: 3}
@@ -64,7 +64,7 @@ MonoBehaviour:
       \u0E22\u0E37\u0E48\u0E19\u0E01\u0E23\u0E30\u0E14\u0E32\u0E29\u0E17\u0E35\u0E48\u0E21\u0E35\u0E40\u0E1A\u0E2D\u0E23\u0E4C\u0E42\u0E17\u0E23\u0E40\u0E02\u0E35\u0E22\u0E19\u0E2D\u0E22\u0E39\u0E48\u0E43\u0E2B\u0E49\u0E2B\u0E25\u0E34\u0E19*"
     hasChoices: 0
     choices: []
-  - side: 0
+  - side: 1
     character:
       name: LuoFeng
       icon: {fileID: 3594042269662909776, guid: 25feeeaf378f17145a7f54addd04299c, type: 3}
@@ -73,7 +73,7 @@ MonoBehaviour:
       \u0E23\u0E1A\u0E01\u0E27\u0E19\u0E42\u0E17\u0E23\u0E41\u0E08\u0E49\u0E07\u0E21\u0E32\u0E17\u0E32\u0E07\u0E19\u0E35\u0E49\u0E44\u0E14\u0E49\u0E40\u0E25\u0E22\u0E04\u0E23\u0E31\u0E1A"
     hasChoices: 0
     choices: []
-  - side: 0
+  - side: 1
     character:
       name: LuoFeng
       icon: {fileID: 3594042269662909776, guid: 25feeeaf378f17145a7f54addd04299c, type: 3}
@@ -81,7 +81,7 @@ MonoBehaviour:
     line: "\u0E2A\u0E48\u0E27\u0E19\u0E1C\u0E39\u0E49\u0E2B\u0E21\u0E27\u0E14 \u0E04\u0E38\u0E13\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E25\u0E31\u0E1A\u0E44\u0E1B\u0E17\u0E1A\u0E17\u0E27\u0E19\u0E16\u0E36\u0E07\u0E27\u0E34\u0E19\u0E31\u0E22\u0E15\u0E33\u0E23\u0E27\u0E08\u0E2D\u0E35\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07\u0E41\u0E25\u0E49\u0E27\u0E19\u0E30\u0E04\u0E23\u0E31\u0E1A"
     hasChoices: 0
     choices: []
-  - side: 0
+  - side: 1
     character:
       name: LuoFeng
       icon: {fileID: -117363901384088880, guid: 870783911bef34c4ab1228e99c63eace, type: 3}

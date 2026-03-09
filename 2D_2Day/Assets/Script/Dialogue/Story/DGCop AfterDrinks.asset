@@ -21,11 +21,11 @@ MonoBehaviour:
   deactivateBefore: []
   deactivateAfter: []
   lines:
-  - side: 0
+  - side: 1
     character:
       name: ...
-      icon: {fileID: 4932163390197376912, guid: 8687157a7f94c364d89fb85962b5ad82, type: 3}
-      icon2: {fileID: -117363901384088880, guid: 870783911bef34c4ab1228e99c63eace, type: 3}
+      icon: {fileID: 3594042269662909776, guid: 25feeeaf378f17145a7f54addd04299c, type: 3}
+      icon2: {fileID: 4932163390197376912, guid: 8687157a7f94c364d89fb85962b5ad82, type: 3}
     line: ...
     hasChoices: 1
     choices:
