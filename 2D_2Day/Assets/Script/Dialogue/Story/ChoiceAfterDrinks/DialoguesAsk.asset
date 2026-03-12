@@ -17,9 +17,12 @@ MonoBehaviour:
   maxPitch: 1.1
   soundFrequency: 3
   activateBefore: []
-  activateAfter: []
+  activateAfter:
+  - Teleport 01
+  - Achen
   deactivateBefore: []
-  deactivateAfter: []
+  deactivateAfter:
+  - ChenHiding01
   lines:
   - side: 1
     character:

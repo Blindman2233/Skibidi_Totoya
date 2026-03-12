@@ -17,7 +17,8 @@ MonoBehaviour:
   maxPitch: 0.712
   soundFrequency: 3
   activateBefore: []
-  activateAfter: []
+  activateAfter:
+  - Achen AfterDrinks
   deactivateBefore: []
   deactivateAfter: []
   lines:

@@ -19,8 +19,10 @@ MonoBehaviour:
   activateBefore: []
   activateAfter:
   - Teleport 01
+  - Achen
   deactivateBefore: []
-  deactivateAfter: []
+  deactivateAfter:
+  - ChenHiding01
   lines:
   - side: 1
     character:
