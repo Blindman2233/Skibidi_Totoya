@@ -16,6 +16,6 @@ MonoBehaviour:
   eventDescription: 
   requiredConditions: []
   actionsOnComplete: []
-  dialogueData: {fileID: 0}
+  dialogueData: {fileID: 11400000, guid: 7ca2d19bdda57154fbd2c181ecad1b25, type: 2}
   isRepeatable: 0
   nextEvents: []

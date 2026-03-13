@@ -18,11 +18,12 @@ MonoBehaviour:
   soundFrequency: 3
   activateBefore: []
   activateAfter:
-  - Teleport 01
-  - Achen
+  - 
+  - Achen AfterDrinks
   deactivateBefore: []
   deactivateAfter:
   - ChenHiding01
+  - LuoFeng (AfterDrinks)
   lines:
   - side: 1
     character:
