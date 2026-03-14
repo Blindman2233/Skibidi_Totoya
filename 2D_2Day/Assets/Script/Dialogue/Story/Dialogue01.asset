@@ -20,6 +20,7 @@ MonoBehaviour:
   activateAfter:
   - LuoFeng
   - ChenHiding01
+  - BlackFade EFX
   deactivateBefore: []
   deactivateAfter:
   - Achen

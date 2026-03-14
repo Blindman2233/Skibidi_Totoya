@@ -19,6 +19,7 @@ MonoBehaviour:
   activateBefore: []
   activateAfter:
   - Achen AfterDrinks
+  - BlackFade EFX
   deactivateBefore: []
   deactivateAfter: []
   lines:

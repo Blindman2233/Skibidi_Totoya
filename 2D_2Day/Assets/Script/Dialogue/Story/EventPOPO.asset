@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventData
   eventName: DialogueCop
   eventDescription: 
-  requiredConditions: []
+  requiredConditions:
+  - flagName: 
+    conditionType: 0
+    comparison: 0
+    boolValue: 0
+    intValue: 0
+    floatValue: 0
+    stringValue: 
   actionsOnComplete: []
   dialogueData: {fileID: 11400000, guid: a9e25e25db54e9141b625081d149c4f4, type: 2}
   isRepeatable: 0

@@ -20,7 +20,8 @@ MonoBehaviour:
   activateAfter:
   - PourBeerUI
   - LuoFeng (AfterDrinks)
-  deactivateBefore: []
+  deactivateBefore:
+  - BlackFade EFX
   deactivateAfter:
   - LuoFeng
   lines:
