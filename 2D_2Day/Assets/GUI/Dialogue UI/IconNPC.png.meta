@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 4dccc984f805cea46946b7d1671387aa
+guid: 50308b25a976fad4bbe9e042dd47e12a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5350627022077071143
-    second: IconNPCTalk_0
-  - first:
-      213: 1256414535176908334
-    second: IconNPCTalk_1
+      213: -26329759613171845
+    second: Group 4_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IconNPCTalk_0
+      name: Group 4_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 62
-        width: 62
-        height: 144
+        x: 2
+        y: 1
+        width: 210
+        height: 262
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9d07d7f7211ceb5b0800000000000000
-      internalID: -5350627022077071143
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IconNPCTalk_1
-      rect:
-        serializedVersion: 2
-        x: 9
-        y: 0
-        width: 44
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e2e6bdbec5eaf6110800000000000000
-      internalID: 1256414535176908334
+      spriteID: b774c3f193572aff0800000000000000
+      internalID: -26329759613171845
       vertices: []
       indices: 
       edges: []
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IconNPCTalk_0: -5350627022077071143
-      IconNPCTalk_1: 1256414535176908334
+      Group 4_0: -26329759613171845
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
