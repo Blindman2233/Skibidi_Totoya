@@ -98,7 +98,7 @@ MonoBehaviour:
   - side: 1
     character:
       name: Mc
-      icon: {fileID: 3594042269662909776, guid: 25feeeaf378f17145a7f54addd04299c, type: 3}
+      icon: {fileID: -3084705627165444340, guid: 9ddeb4ee5548be541b4d0295f7350da5, type: 3}
       icon2: {fileID: 3594042269662909776, guid: 25feeeaf378f17145a7f54addd04299c, type: 3}
     line: "\u0E1B\u0E23\u0E30\u0E21\u0E32\u0E13\u0E19\u0E31\u0E49\u0E19\u0E04\u0E23\u0E31\u0E1A"
     hasChoices: 0

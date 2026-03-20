@@ -188,8 +188,8 @@ MonoBehaviour:
   - side: 1
     character:
       name: Achen
-      icon: {fileID: 0}
-      icon2: {fileID: 0}
+      icon: {fileID: 8213111197245933535, guid: 7f313ce390c77044d937e1483f433ff1, type: 3}
+      icon2: {fileID: -3084705627165444340, guid: 9ddeb4ee5548be541b4d0295f7350da5, type: 3}
     line: "\u0E02\u0E2D\u0E40\u0E16\u0E2D\u0E30\u0E19\u0E30 \u0E19\u0E30"
     hasChoices: 0
     choices: []
