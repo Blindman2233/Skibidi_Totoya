@@ -24,6 +24,6 @@ MonoBehaviour:
     stringValue: 
   actionsOnComplete: []
   dialogueData: {fileID: 11400000, guid: a9e25e25db54e9141b625081d149c4f4, type: 2}
-  isRepeatable: 0
+  isRepeatable: 1
   nextEvents:
   - {fileID: 11400000, guid: 5068cf800e311a64b9021aa4c8a5b618, type: 2}

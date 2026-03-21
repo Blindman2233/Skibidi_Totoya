@@ -402,10 +402,23 @@ MonoBehaviour:
   fallSpeed: 10
   lineRenderer: {fileID: 1859196455}
   obstacleLayerMask:
-    serializedVersion: 2
     m_Bits: 8192
   boxCollider2D: {fileID: 748070079}
   splashEffectObject: {fileID: 1859196451}
+  maxWidth: 1
+  widthChangeSpeed: 6
+  enableThreshold: 0.9
+  disableThreshold: 0.05
+  targetGlass: {fileID: 0}
+  autoDetectGlass: 1
+  glassDetectRadius: 2
+  autoSortBehindBeer: 1
+  sortBehindOffset: -10
+  streamSortingLayerName: Default
+  streamSortingOrder: 0
+  lastLength: 0
+  isEmitting: 0
+  desiredEmitting: 0
 --- !u!61 &748070079
 BoxCollider2D:
   m_ObjectHideFlags: 0
