@@ -3345,7 +3345,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101086874}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce5ea97f8b120a4498aec1aaa28a9414, type: 3}
   m_Name: 
@@ -3371,7 +3371,7 @@ MonoBehaviour:
   optionButton: {fileID: 2116516892}
   quitButton: {fileID: 142385570}
   saveLoadPanel: {fileID: 1787668509}
-  firstGameSceneName: Chapter01
+  firstGameSceneName: Introduction
 --- !u!1 &1107350542
 GameObject:
   m_ObjectHideFlags: 0
@@ -5937,6 +5937,10 @@ PrefabInstance:
     - target: {fileID: 9096345507466959265, guid: 18474f46f3e4e8c42905db44cda60761, type: 3}
       propertyPath: m_Name
       value: Save & Load UI -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096345507466959265, guid: 18474f46f3e4e8c42905db44cda60761, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

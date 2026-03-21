@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 33d8cb919b0ad4e46acd31bf168a9eba
   - enabled: 1
-    path: Assets/_ForthParty_ByM/Introduction/Introduction.unity
+    path: Assets/Scenes/_ForthParty_ByM/Introduction/Introduction.unity
     guid: 14090485a48be124a998e5af0b1ac42a
   - enabled: 1
     path: Assets/Scenes/Chapter01.unity
