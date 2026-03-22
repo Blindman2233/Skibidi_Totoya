@@ -13,14 +13,12 @@ public class Intro : MonoBehaviour
     private RectTransform pointerTransform;
     private Vector3 targetPosition;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         pointerTransform = GetComponent<RectTransform>();
         targetPosition = pointB.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Move the pointer towards the target position
@@ -34,18 +32,9 @@ public class Intro : MonoBehaviour
         }
         else if (Vector3.Distance(pointerTransform.position, pointB.position) < 0.1f)
         {
-            //targetPosition = pointA.position;
-            //direction = -1f;
-
             intro.SetActive(false);
             Menu1.SetActive(true);
             Menu2.SetActive(true);
-        }
-
-        // Check for input
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            
         }
     }
 }
