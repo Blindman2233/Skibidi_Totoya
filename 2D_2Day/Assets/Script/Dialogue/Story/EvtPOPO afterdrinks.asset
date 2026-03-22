@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventData
   eventName: DGCop AfterDrinks
   eventDescription: 
+  eventType: 0
   requiredConditions: []
   actionsOnComplete: []
   dialogueData: {fileID: 11400000, guid: 395f76606b70c3d41afc31ea3db8b5a2, type: 2}
   isRepeatable: 0
   nextEvents:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 53f867df157c3b747b093fc54d46b559, type: 2}
+  pourLiquorSettings: {fileID: 0}
