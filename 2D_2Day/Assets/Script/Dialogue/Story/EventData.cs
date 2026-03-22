@@ -7,20 +7,20 @@ public class StoryCondition
     public string flagName;
     public enum ConditionType { Boolean, Integer, Float, String }
     public ConditionType conditionType;
-    
+
     public enum Comparison { Equals, NotEquals, GreaterThan, LessThan, GreaterOrEqual, LessOrEqual }
     public Comparison comparison;
-    
+
     public bool boolValue;
     public int intValue;
     public float floatValue;
     public string stringValue;
-    
+
     public bool CheckCondition(List<StoryFlag> flags)
     {
         StoryFlag flag = flags.Find(f => f.flagName == flagName);
         if (flag == null) return false;
-        
+
         switch (conditionType)
         {
             case ConditionType.Boolean:
@@ -35,11 +35,11 @@ public class StoryCondition
                 return false;
         }
     }
-    
+
     private bool CompareValues<T>(T value1, T value2, Comparison comp) where T : System.IComparable<T>
     {
         int comparison = value1.CompareTo(value2);
-        
+
         switch (comp)
         {
             case Comparison.Equals: return comparison == 0;
@@ -56,32 +56,47 @@ public class StoryCondition
 [CreateAssetMenu(fileName = "EventData", menuName = "Story System/Event Data")]
 public class EventData : ScriptableObject
 {
+    public enum EventType
+    {
+        DialogueOnly,
+        PourLiquor
+    }
+
+    [Header("Basic Info")]
     public string eventName;
     public string eventDescription;
-    
+
+    [Header("Event Type")]
+    public EventType eventType = EventType.DialogueOnly;
+
     [Header("Conditions")]
     public List<StoryCondition> requiredConditions = new List<StoryCondition>();
-    
+
     [Header("Actions")]
     public List<StoryAction> actionsOnComplete = new List<StoryAction>();
-    
+
     [Header("Dialogue")]
     public DialoguesObject dialogueData;
     public bool isRepeatable = false;
-    
+
     [Header("Next Events")]
+    [Tooltip("ใช้สำหรับลำดับเหตุการณ์ทั่วไป หรือสำหรับมินิเกมรินเหล้าให้ใส่ Event ถัดไปตามผลลัพธ์ (index 0 = ชนะ, index 1 = แพ้)")]
     public List<EventData> nextEvents = new List<EventData>();
-    
+
+    [Header("Pour Liquor Settings")]
+    [Tooltip("ตั้งค่ามินิเกมรินเหล้า ถ้า EventType = PourLiquor จำเป็นต้องใส่ข้อมูลนี้")]
+    public PourLiquorSettings pourLiquorSettings;
+
     public bool CanTrigger(List<StoryFlag> currentFlags)
     {
         if (requiredConditions.Count == 0) return true;
-        
+
         foreach (var condition in requiredConditions)
         {
             if (!condition.CheckCondition(currentFlags))
                 return false;
         }
-        
+
         return true;
     }
 }

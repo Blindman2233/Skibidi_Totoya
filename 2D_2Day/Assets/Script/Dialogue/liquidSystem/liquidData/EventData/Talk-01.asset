@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ed37412e2e3e24c812f9be33f5d071, type: 3}
+  m_Name: Talk-01
+  m_EditorClassIdentifier: Assembly-CSharp::EventData
+  eventName: Take-01
+  eventDescription: 
+  eventType: 0
+  requiredConditions: []
+  actionsOnComplete:
+  - flagName: Talk-01
+    actionType: 0
+    boolValue: 1
+    intValue: 0
+    floatValue: 0
+    stringValue: 
+  dialogueData: {fileID: 11400000, guid: 3440e4e84afc6104988e4c5322b6b36d, type: 2}
+  isRepeatable: 0
+  nextEvents:
+  - {fileID: 11400000, guid: 73ff1714a649fc14a980e0ee092445f5, type: 2}
+  pourLiquorSettings: {fileID: 0}

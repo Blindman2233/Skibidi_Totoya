@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Take-02
+  m_EditorClassIdentifier: Assembly-CSharp::DialoguesObject
+  lines:
+  - side: 0
+    character:
+      name: Lin
+      icon: {fileID: 0}
+      icon2: {fileID: 0}
+    line: One Two Tree
+    hasChoices: 0
+    choices: []
+    miniGameSettings:
+      triggerPourLiquorMiniGame: 0
+      delayBeforeStart: 0.5
+      pourLiquorSettings: {fileID: 0}
+      onMiniGameSuccessDialogue: {fileID: 0}
+      onMiniGameFailDialogue: {fileID: 0}
+      onMiniGameSuccessActions: []
+      onMiniGameFailActions: []
+  - side: 0
+    character:
+      name: Lin
+      icon: {fileID: 0}
+      icon2: {fileID: 0}
+    line: To For
+    hasChoices: 0
+    choices: []
+    miniGameSettings:
+      triggerPourLiquorMiniGame: 1
+      delayBeforeStart: 0.2
+      pourLiquorSettings: {fileID: 11400000, guid: 1cf9c10070d27ef4cb6941e679468e00, type: 2}
+      onMiniGameSuccessDialogue: {fileID: 0}
+      onMiniGameFailDialogue: {fileID: 0}
+      onMiniGameSuccessActions: []
+      onMiniGameFailActions: []
