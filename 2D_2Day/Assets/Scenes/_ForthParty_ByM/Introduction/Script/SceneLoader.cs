@@ -7,7 +7,7 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadSceneGame()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Introduction");
     }
 
     public void LoadNextInBuild()
